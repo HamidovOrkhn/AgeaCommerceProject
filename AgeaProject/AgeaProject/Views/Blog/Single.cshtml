@@ -1,0 +1,90 @@
+﻿@model Blog 
+@{
+    ViewData["Title"] = "Single";
+}
+
+<!-- Begin Li's Breadcrumb Area -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="active">Blog Gallery Format</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Li's Breadcrumb Area End Here -->
+<!-- Begin Li's Main Blog Page Area -->
+<div class="li-main-blog-page pt-60 pb-55">
+    <div class="container">
+        <div class="row">
+            <!-- Begin Li's Blog Sidebar Area -->
+            <div class="col-lg-3 order-lg-1 order-2">
+                <div class="li-blog-sidebar-wrapper">
+                    <div class="li-blog-sidebar">
+                        <div class="li-sidebar-search-form">
+                            <form action="#">
+                                <input type="text" class="li-search-field" placeholder="search here">
+                                <button type="submit" class="li-search-btn"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="li-blog-sidebar pt-25">
+                        <h4 class="li-blog-sidebar-title">Categories</h4>
+                        <ul class="li-blog-archive">
+                            <li><a href="#">Laptops (10)</a></li>
+                            <li><a href="#">TV & Audio (08)</a></li>
+                            <li><a href="#">reach (07)</a></li>
+                            <li><a href="#">Smartphone (14)</a></li>
+                            <li><a href="#">Cameras (10)</a></li>
+                            <li><a href="#">Headphone (06)</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Li's Blog Sidebar Area End Here -->
+            <!-- Begin Li's Main Content Area -->
+            <div class="col-lg-9 order-lg-2 order-1">
+                <div class="row li-main-content">
+                    <div class="col-lg-12">
+                        <div class="li-blog-single-item pb-40">
+                            <div class="li-blog-gallery-slider slick-dot-style">
+                                <div class="li-blog-banner">
+                                    <a href="blog-details.html"><img class="img-full" src="~/images/blog-banner/@Model.Image" alt="Product Image"></a>
+                                </div>
+                            </div>
+                            <div class="li-blog-content">
+                                <div class="li-blog-details">
+                                    <h3 class="li-blog-heading pt-35"><a href="blog-details.html">@Model.Title</a></h3>
+                                    <div class="li-blog-meta">
+                                        <a class="author" href="#"><i class="fa fa-user"></i>Admin</a>
+                                        <a class="post-time" href="#"><i class="fa fa-calendar"></i>@Model.CreatedDate.ToString("dd MMM yyyy")</a>
+                                    </div>
+                                    <!-- Begin Blog Blockquote Area -->
+                                    <div class="li-blog-blockquote">
+                                        <blockquote>
+                                            <p>
+                                                @Html.Raw(Model.Text)
+                                            </p>
+                                        </blockquote>
+                                    </div>
+                                    <!-- Blog Blockquote Area End Here -->
+                                    <div class="li-blog-sharing text-center pt-30">
+                                        <h4>share this post:</h4>
+                                        <a href="#"><i class="fa fa-facebook"></i></a>
+                                        <a href="#"><i class="fa fa-twitter"></i></a>
+                                        <a href="#"><i class="fa fa-pinterest"></i></a>
+                                        <a href="#"><i class="fa fa-google-plus"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Li's Main Content Area End Here -->
+        </div>
+    </div>
+</div>
+<!-- Li's Main Blog Page Area End Here -->

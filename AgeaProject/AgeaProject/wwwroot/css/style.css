@@ -2929,9 +2929,9 @@ textarea:focus {
 .footer-newsletter .form-group .btn {
 	position: absolute;
 	right: 0;
-	background: #fed700;
+	background-color:orangered;
 	border: none;
-	color: #242424;
+	color: white;
 	height: 45px;
 	text-transform: uppercase;
 	font-size: 12px;

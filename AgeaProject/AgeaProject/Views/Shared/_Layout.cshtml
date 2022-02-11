@@ -119,7 +119,7 @@
                         <!-- Begin Header Logo Area -->
                         <div class="col-lg-3">
                             <div class="logo pb-sm-30 pb-xs-30">
-                                <a href="index.html">
+                                <a asp-action="Index" asp-controller="Home">
                                     <img src="~/images/agea-logo.png" alt="">
                                 </a>
                             </div>
@@ -284,7 +284,7 @@
                                 <nav>
                                     <ul>
                                         <li><a asp-action="Index" asp-controller="Home">Home</a></li>
-                                        <li><a href="about-us.html">About Us</a></li>
+                                        <li><a asp-action="Index" asp-controller="AboutUs">About Us</a></li>
                                         <li class="megamenu-holder nav-item">
                                             <a href="shop-left-sidebar.html">Shop</a>
                                             <ul class="megamenu hb-megamenu">
@@ -323,44 +323,8 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li class="dropdown-holder nav-item">
-                                            <a href="blog-left-sidebar.html">Blog</a>
-                                            <ul class="hb-dropdown">
-                                                <li class="sub-dropdown-holder">
-                                                    <a href="blog-left-sidebar.html">Blog Grid View</a>
-                                                    <ul class="hb-dropdown hb-sub-dropdown">
-                                                        <li><a href="blog-2-column.html">Blog 2 Column</a></li>
-                                                        <li><a href="blog-3-column.html">Blog 3 Column</a></li>
-                                                        <li><a href="blog-left-sidebar.html">Grid Left Sidebar</a></li>
-                                                        <li><a href="blog-right-sidebar.html">Grid Right Sidebar</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="sub-dropdown-holder">
-                                                    <a href="blog-list-left-sidebar.html">Blog List View</a>
-                                                    <ul class="hb-dropdown hb-sub-dropdown">
-                                                        <li><a href="blog-list.html">Blog List</a></li>
-                                                        <li><a href="blog-list-left-sidebar.html">List Left Sidebar</a></li>
-                                                        <li><a href="blog-list-right-sidebar.html">List Right Sidebar</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="sub-dropdown-holder">
-                                                    <a href="blog-details-left-sidebar.html">Blog Details</a>
-                                                    <ul class="hb-dropdown hb-sub-dropdown">
-                                                        <li><a href="blog-details-left-sidebar.html">Left Sidebar</a></li>
-                                                        <li><a href="blog-details-right-sidebar.html">Right Sidebar</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="sub-dropdown-holder">
-                                                    <a href="blog-gallery-format.html">Blog Format</a>
-                                                    <ul class="hb-dropdown hb-sub-dropdown">
-                                                        <li><a href="blog-audio-format.html">Blog Audio Format</a></li>
-                                                        <li><a href="blog-video-format.html">Blog Video Format</a></li>
-                                                        <li><a href="blog-gallery-format.html">Blog Gallery Format</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><a asp-action="Index" asp-controller="Blog">Blog</a></li>
+                                        <li><a asp-action="Index" asp-controller="Contact">Contact</a></li>
                                         <!-- Begin Header Bottom Menu Information Area -->
                                         <li class="hb-info f-right p-0 d-sm-none d-lg-block">
                                             <span>6688 London, Greater London BAS 23JK, UK</span>
@@ -462,7 +426,7 @@
                             <!-- Begin Footer Logo Area -->
                             <div class="col-lg-4 col-md-6">
                                 <div class="footer-logo">
-                                    <img src="~/images/menu/logo/1.jpg" alt="Footer Logo">
+                                    <img src="~/images/agea-logo.png" alt="Footer Logo">
                                     <p class="info">
                                         We are a team of designers and developers that create high quality HTML Template & Woocommerce, Shopify Theme.
                                     </p>
@@ -478,7 +442,7 @@
                                     </li>
                                     <li>
                                         <span>Email: </span>
-                                        <a href="mailto://info@yourdomain.com">info@yourdomain.com</a>
+                                        <a href="">info@yourdomain.com</a>
                                     </li>
                                 </ul>
                             </div>
@@ -571,41 +535,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                            <!-- Begin Footer Links Area -->
-                            <div class="footer-links">
-                                <ul>
-                                    <li><a href="#">Online Shopping</a></li>
-                                    <li><a href="#">Promotions</a></li>
-                                    <li><a href="#">My Orders</a></li>
-                                    <li><a href="#">Help</a></li>
-                                    <li><a href="#">Customer Service</a></li>
-                                    <li><a href="#">Support</a></li>
-                                    <li><a href="#">Most Populars</a></li>
-                                    <li><a href="#">New Arrivals</a></li>
-                                    <li><a href="#">Special Products</a></li>
-                                    <li><a href="#">Manufacturers</a></li>
-                                    <li><a href="#">Our Stores</a></li>
-                                    <li><a href="#">Shipping</a></li>
-                                    <li><a href="#">Payments</a></li>
-                                    <li><a href="#">Warantee</a></li>
-                                    <li><a href="#">Refunds</a></li>
-                                    <li><a href="#">Checkout</a></li>
-                                    <li><a href="#">Discount</a></li>
-                                    <li><a href="#">Refunds</a></li>
-                                    <li><a href="#">Policy Shipping</a></li>
-                                </ul>
-                            </div>
-                            <!-- Footer Links Area End Here -->
-                            <!-- Begin Footer Payment Area -->
-                            <div class="copyright text-center">
-                                <a href="#">
-                                    <img src="~/images/payment/1.png" alt="">
-                                </a>
-                            </div>
-                            <!-- Footer Payment Area End Here -->
                             <!-- Begin Copyright Area -->
                             <div class="copyright text-center pt-25">
-                                <span><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></span>
+                                <span><a target="_blank" href="">By Ismayil Husein ,Orkhan Hamid</a></span>
                             </div>
                             <!-- Copyright Area End Here -->
                         </div>
@@ -773,6 +705,4 @@
     <!-- Main/Activator js -->
     <script src="~/js/main.js"></script>
 </body>
-
-<!-- index-231:38-->
 </html>
