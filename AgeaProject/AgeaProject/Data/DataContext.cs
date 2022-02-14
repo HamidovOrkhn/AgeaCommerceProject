@@ -40,6 +40,7 @@ namespace AgeaProject.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<SubCategoryCredential> SubCategoryCredentials { get; set; }
+        public DbSet<SliderAd> SliderAds { get; set; }
         public DbSet<AboutUs> AboutUs { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogCredentials> BlogCredentials { get; set; }

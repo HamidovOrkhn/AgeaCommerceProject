@@ -1,0 +1,65 @@
+﻿@model IEnumerable<AgeaProject.Models.SliderAd>
+
+@{
+    ViewData["Title"] = "Slider";
+}
+
+<h1>Owl Slider</h1>
+
+<p>
+    <a asp-action="SliderCreate">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TextFooter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TextBody)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TextHeader)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Src)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TextFooter)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TextBody)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TextHeader)
+                </td>
+                <td>
+                   <img width="50" height="50" src="~/uploads/@item.Src" />
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "SliderRemove", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts{
+    @if (TempData["Success-SliderAd"] is object)
+    {
+        <input type="hidden" id="Success-SliderAd" value="@TempData["Success-SliderAd"]" />
+        <script>
+            Swal.fire(
+                'Success !',
+                $('#Success-SliderAd').val(),
+                'success'
+            )
+        </script>
+    }
+}

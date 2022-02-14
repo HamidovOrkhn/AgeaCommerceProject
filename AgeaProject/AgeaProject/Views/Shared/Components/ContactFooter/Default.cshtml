@@ -1,0 +1,26 @@
+﻿@model ContactUs
+@if (Model is object)
+{
+    <div class="col-lg-4 col-md-6">
+        <div class="footer-logo">
+            <img src="~/images/agea-logo.png" alt="Footer Logo">
+            <p class="info">
+                @Model.Text
+            </p>
+        </div>
+        <ul class="des">
+            <li>
+                <span>Address: </span>
+                @Model.Address
+            </li>
+            <li>
+                <span>Phone: </span>
+                <a href="#">@Model.Phone</a>
+            </li>
+            <li>
+                <span>Email: </span>
+                <a href="">@Model.Email</a>
+            </li>
+        </ul>
+    </div>
+}

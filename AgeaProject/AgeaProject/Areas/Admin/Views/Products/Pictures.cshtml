@@ -1,0 +1,52 @@
+﻿@model List<SubCategoryCredential>
+@{ 
+    int subId = 0;
+    if (Context.Request.RouteValues["id"] is object)
+    {
+        subId = int.Parse(Context.Request.RouteValues["id"].ToString());
+    }
+} 
+<div class="row">
+    <div class="col-md-12">
+        <h4>@ViewData["CategoryName"]</h4>
+        <hr />
+        <h5>@ViewData["ProductName"]</h5>
+    </div>
+</div>
+<div class="row mb-3 mt-3">
+    <div class="col-md-12">
+        <a asp-action="AddPicture" asp-controller="Products" asp-area="Admin" asp-route-id=@subId class="btn btn-primary">Add Picture</a>
+    </div>
+</div>
+<div class="row">
+    @if (Model is object)
+    {
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-2 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="~/uploads/@item.Src" class="img-fluid" alt="Responsive image">
+                    </div>
+                    <div class="card-footer text-right">
+                        <a asp-action="RemovePicture" asp-controller="Products" asp-route-id="@item.Id" class="btn btn-danger">Remove</a>
+                    </div>
+                </div>
+
+            </div>
+        }
+    }
+</div>
+@section Scripts{
+    @if (TempData["Success-Credentials"] is object)
+    {
+        <input type="hidden" id="Success-Credentials" value="@TempData["Success-Credentials"]" />
+        <script>
+            Swal.fire(
+                'Success !',
+                $('#Success-Credentials').val(),
+                'success'
+            )
+        </script>
+    }
+}

@@ -17,7 +17,6 @@ namespace AgeaProject.Migrations
                 .HasAnnotation("ProductVersion", "3.1.22")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-<<<<<<< HEAD
             modelBuilder.Entity("AgeaProject.Models.AboutUs", b =>
                 {
                     b.Property<int>("Id")
@@ -86,8 +85,6 @@ namespace AgeaProject.Migrations
                     b.ToTable("BlogCredentials");
                 });
 
-=======
->>>>>>> d96de0f78e78869a8958391932f55c9d44f9c035
             modelBuilder.Entity("AgeaProject.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -119,7 +116,6 @@ namespace AgeaProject.Migrations
                     b.ToTable("Categories");
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("AgeaProject.Models.ContactForm", b =>
                 {
                     b.Property<int>("Id")
@@ -218,8 +214,29 @@ namespace AgeaProject.Migrations
                     b.ToTable("Sliders");
                 });
 
-=======
->>>>>>> d96de0f78e78869a8958391932f55c9d44f9c035
+            modelBuilder.Entity("AgeaProject.Models.SliderAd", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Src")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TextBody")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TextFooter")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TextHeader")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SliderAds");
+                });
+
             modelBuilder.Entity("AgeaProject.Models.SubCategory", b =>
                 {
                     b.Property<int>("Id")
@@ -294,7 +311,6 @@ namespace AgeaProject.Migrations
                     b.ToTable("SubCategoryCredentials");
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("AgeaProject.Models.BlogCredentials", b =>
                 {
                     b.HasOne("AgeaProject.Models.Blog", "Blog")
@@ -304,8 +320,6 @@ namespace AgeaProject.Migrations
                         .IsRequired();
                 });
 
-=======
->>>>>>> d96de0f78e78869a8958391932f55c9d44f9c035
             modelBuilder.Entity("AgeaProject.Models.SubCategory", b =>
                 {
                     b.HasOne("AgeaProject.Models.Category", "Category")

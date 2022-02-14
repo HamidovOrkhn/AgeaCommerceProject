@@ -22,6 +22,8 @@
     <!-- Custom styles for this page -->
     <link href="~/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="~/public/assets/styles/choices.min.css" />
+
 </head>
 
 <body id="page-top">
@@ -66,6 +68,20 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Products</span>
                 </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                   aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-folder"></i>
+                    <span>Site Settings</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Parameters</h6>
+                        <a class="collapse-item" asp-action="Slider" asp-controller="Settings" asp-area="Admin">Slider menu</a>
+                        <a class="collapse-item" asp-action="Contact" asp-controller="Settings" asp-area="Admin">Contact Info</a>
+                    </div>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -185,6 +201,8 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+
+    <script src="~/public/assets/scripts/choices.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 

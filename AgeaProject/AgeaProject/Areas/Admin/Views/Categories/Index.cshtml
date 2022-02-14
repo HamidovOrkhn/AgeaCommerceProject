@@ -1,4 +1,4 @@
-﻿@model IndexViewModel
+﻿@model AgeaProject.Areas.Admin.ViewModels.IndexViewModel
 <div class="row">
     <div class="col-12">
         <h3>Categories</h3>
@@ -43,11 +43,11 @@
                 @for (int i = Model.Pagination.StartPage; i <= Model.Pagination.EndPage; i++)
                 {
                     <li class="page-item @(Model.Pagination.Page == i ? "active": "")">
-                        <a class="page-link" asp-action="Categories" asp-controller="Home" asp-area="Admin" asp-route-page=@i>@(i + 1)<span class="sr-only">(current)</span></a>
+                        <a class="page-link" asp-action="Index" asp-controller="Categories" asp-area="Admin" asp-route-page=@i>@(i + 1)<span class="sr-only">(current)</span></a>
                     </li>
                 }
                 <li class="page-item  @(Model.Pagination.Page == Model.Pagination.PageCount - 1 ? "disabled": "")">
-                    <a class="page-link" asp-action="Categories" asp-controller="Home" asp-area="Admin" asp-route-page=@(Model.Pagination.PageCount-1)>Last Page</a>
+                    <a class="page-link" asp-action="Index" asp-controller="Categories" asp-area="Admin" asp-route-page=@(Model.Pagination.PageCount-1)>Last Page</a>
                 </li>
             </ul>
         </nav>
