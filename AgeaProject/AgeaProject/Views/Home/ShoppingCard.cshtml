@@ -1,0 +1,132 @@
+﻿@model IEnumerable<AgeaProject.Models.BaseEntity>
+
+@{
+    ViewData["Title"] = "ShoppingCard";
+}
+
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li class="active">Shopping Cart</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="Shopping-cart-area pt-60 pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form action="#">
+                    <div class="table-content table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="li-product-thumbnail">images</th>
+                                    <th class="cart-product-name">Product</th>
+                                    <th class="li-product-price">Unit Price</th>
+                                    <th class="li-product-quantity">Quantity</th>
+                                    <th class="li-product-subtotal">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody class="shoppingcard-body">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 ml-auto">
+                            <div class="cart-page-total">
+                                <h2>Cart totals</h2>
+                                <ul>
+                                    <li>Total <span>$130.00</span></li>
+                                </ul>
+                                <a href="#">Proceed to checkout</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{ 
+    <script>
+            LoadShopCard()
+            function LoadShopCard() {
+            var data = localStorage.getItem("shoping-keys")
+            if (data) {
+            var splited = data.split(",")
+                var group_of_items = groupBy(splited);
+                var keys = returnKeys(group_of_items);
+                var price = 0;
+                var unitCount = 0;
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetShop", "Home")",
+                data: JSON.stringify(keys),
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var item = "";
+                    for (var i = 0; i < data.length; i++) {
+                        var existed = group_of_items.find(({ id }) => id === `${data[i].id}`);
+                        console.log(existed + "existed")
+                        console.log(group_of_items)
+                        item += `<tr id="tr${data[i].id}">
+                                    <td class="li-product-thumbnail"><a href="#"><img style="width:250px;height250px;" src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/${data[i].subCategoryCredentials ? data[i].subCategoryCredentials[0].src : ""}" alt="Li's Product Image"></a></td>
+                                    <td class="li-product-name"><a href="#">${data[i].name}</a></td>
+                                    <td class="li-product-price"><span class="amount">$${data[i].price}</span></td>
+                                    <td class="quantity">
+                                       <h5>X ${existed.count}</h5>
+                                    </td>
+                                    <td class="product-subtotal"><span class="amount">$${data[i].price * existed.count}</span></td>
+                                </tr>`;
+                        price += data[i].price * existed.count
+                        unitCount += 1;
+                    }
+                    $('.shoppingcard-body').append(item)
+                },
+
+            });
+            }
+
+
+        }
+        function groupBy(val) {
+            var obj = [];
+            var iterator = val;
+            for (var i = 0; i < iterator.length; i++) {
+                var existed = obj.find(({ id }) => id === iterator[i]);
+                if (existed) {
+                    existed.count += 1;
+                }
+                else {
+                    obj.push({ id: iterator[i], count: 1 })
+                }
+            }
+            return obj;
+        }
+        function returnKeys(arr) {
+            var obj = [];
+            for (var i = 0; i < arr.length; i++) {
+                obj.push(arr[i].id)
+            }
+            return obj;
+        }
+        function arrayRemove(arr, value) {
+
+            const newArray = [];
+
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] !== value) {
+                    newArray.push(arr[i]);
+                }
+            }
+            console.log(newArray)
+            return newArray;
+
+        }
+    </script>
+}

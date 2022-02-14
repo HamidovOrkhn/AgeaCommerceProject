@@ -61,5 +61,18 @@ namespace AgeaProject.Controllers
         {
             return Json(_db.SubCategories.Where(a=>a.Id == id).Include(a => a.SubCategoryCredentials).FirstOrDefault());
         }
+        public IActionResult ShoppingCard()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult GetShop([FromBody]List<string> keys)
+        {
+            List<SubCategory> data = (from a in _db.SubCategories.Include(a => a.SubCategoryCredentials).ToList()
+                                      join b in keys on a.Id equals int.Parse(b)
+                                      select a).ToList();
+            return Json(data);
+        }
+
     }
 }
