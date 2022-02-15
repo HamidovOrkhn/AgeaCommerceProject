@@ -1,0 +1,103 @@
+﻿@model AgeaProject.Areas.Admin.ViewModels.Quotes.QuotesIndexViewModel
+
+@{
+    ViewData["Title"] = "Quotes";
+}
+
+<h1>Quotes</h1>
+
+<table class="table table-bordered text-center">
+    <thead style="background-color: #e74a3b;color:white;">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Surname
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Phone
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Order Details
+            </th>
+            <th>
+                Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Quotes)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDetails)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Desc)
+            </td>
+            <td>
+                @Html.ActionLink("Remove", "Remove", new { id = item.Id })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<nav aria-label="...">
+    <ul class="pagination">
+        <li class="page-item @(Model.Pagination.Page == 0 ? "disabled": "")">
+            <a class="page-link" asp-route-page=0 tabindex="-1">First Page</a>
+        </li>
+        @for (int i = Model.Pagination.StartPage; i <= Model.Pagination.EndPage; i++)
+        {
+            <li class="page-item @(Model.Pagination.Page == i ? "active": "")">
+                <a class="page-link" asp-action="Index" asp-controller="Quotes" asp-area="Admin" asp-route-page=@i>@(i + 1)<span class="sr-only">(current)</span></a>
+            </li>
+        }
+        <li class="page-item  @(Model.Pagination.Page == Model.Pagination.PageCount - 1 ? "disabled": "")">
+            <a class="page-link" asp-action="Index" asp-controller="Quotes" asp-area="Admin" asp-route-page=@(Model.Pagination.PageCount-1)>Last Page</a>
+        </li>
+    </ul>
+</nav>
+@section Scripts{
+    @if (TempData["Success-Quote"] is object)
+    {
+        <input type="hidden" id="Success-Quote" value="@TempData["Success-Quote"]" />
+        <script>
+            Swal.fire(
+                'Success !',
+                $('#Success-Quote').val(),
+                'success'
+            )
+        </script>
+    }
+
+}

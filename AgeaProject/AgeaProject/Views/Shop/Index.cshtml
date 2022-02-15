@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "Shop";
+}
+@model GlobalIndexViewModel<Category>
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li class="active">Shop</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="content-wraper pt-60 pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Begin Li's Banner Area -->
+                <div class="single-banner shop-page-banner">
+                    <a href="#">
+                        <img src="images/bg-banner/2.jpg" alt="Li's Static Banner">
+                    </a>
+                </div>
+                <!-- Li's Banner Area End Here -->
+                <!-- shop-top-bar start -->
+                <div class="shop-top-bar mt-30">
+                    <div class="shop-bar-inner">
+                        <div class="toolbar-amount">
+                            <span>Showing @((Model.Pagination.Page * Model.Pagination.CountInPage) > 0 ? (Model.Pagination.Page * Model.Pagination.CountInPage):1) to @(Model.Pagination.CountInPage * (Model.Pagination.Page +1) > Model.Pagination.Count? Model.Pagination.Count: Model.Pagination.CountInPage) of @Model.Pagination.Count</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- shop-top-bar end -->
+                <!-- shop-products-wrapper start -->
+                <div class="shop-products-wrapper">
+                    <div class="tab-content">
+                        <div id="grid-view" class="tab-pane fade active show" role="tabpanel">
+                            <div class="product-area shop-product-area">
+                                <div class="row">
+                                    @foreach (var item in (Model.Data is object ? Model.Data : new List<Category>()))
+                                    {
+                                        <div class="col-lg-4 col-md-4 col-sm-6 mt-40">
+                                            <!-- single-product-wrap start -->
+                                            <div class="single-product-wrap">
+                                                <div class="product-image">
+                                                    <a href="single-product.html">
+                                                        <img src="~/uploads/@item.Src" alt="@item.Name">
+                                                    </a>
+                                                </div>
+                                                <div class="product_desc">
+                                                    <div class="product_desc_info text-center">
+                                                        <h2><a style="font-size:20px !important;font-weight:600;" class="product_name" href="single-product.html">@item.Name</a></h2>
+                                                    </div>
+                                                    <div class="add-actions text-center">
+                                                        <ul class="add-actions-link">
+                                                            <li class="add-cart active"><a href="#">Products</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- single-product-wrap end -->
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="paginatoin-area">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <p>Showing @((Model.Pagination.Page * Model.Pagination.CountInPage) > 0 ? (Model.Pagination.Page * Model.Pagination.CountInPage):1)-@(Model.Pagination.CountInPage * (Model.Pagination.Page +1) > Model.Pagination.Count? Model.Pagination.Count: Model.Pagination.CountInPage) of @Model.Pagination.Count item(s)</p>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <ul class="pagination-box">
+                                        <li>
+                                            <a asp-action="Index" asp-controller="Shop" asp-route-page=0 class="Previous"><i class="fa fa-chevron-left"></i>First</a>
+                                        </li>
+                                        @for (int i = Model.Pagination.StartPage; i <= Model.Pagination.EndPage; i++)
+                                        {
+                                            <li class="@(Model.Pagination.Page == i ? "active": "")"><a asp-action="Index" asp-controller="Shop" asp-route-page=@i>@(i + 1)</a></li>
+                                        }
+                                        <li>
+                                            <a asp-action="Index" asp-controller="Shop" asp-route-page=@(Model.Pagination.PageCount-1) class="Next">Last<i class="fa fa-chevron-right"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- shop-products-wrapper end -->
+            </div>
+        </div>
+    </div>
+</div>

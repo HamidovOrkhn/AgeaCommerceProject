@@ -33,9 +33,9 @@
                                     </ul>
                                 </li>
                             }
-                            @if (Model.CategoriesNav.Count == 10)
+                            @if (Model.CategoriesNav.Count > 10)
                             {
-                                @foreach (var item in Model.CategoriesNav.TakeLastSafe(2))
+                                @foreach (var item in Model.CategoriesNav.Skip(10).ToList().TakeSafe(Model.CategoriesNav.Count - 10))
                                 {
                                     <li class="rx-child"><a href="#">@item.Name</a></li>
                                 }
@@ -140,7 +140,7 @@
                                         <div class="add-actions">
                                             <ul class="add-actions-link">
                                                 <li class="add-cart active"><a href="#" data-id="@item.Id">Add to cart</a></li>
-                                                <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
+                                                <li class="add-wishlist"><a class="links-details" href="#" data-id="@item.Id"><i class="fa fa-heart-o"></i></a></li>
                                                 <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                             </ul>
                                         </div>
@@ -212,7 +212,7 @@
                                         <div class="add-actions">
                                             <ul class="add-actions-link">
                                                 <li class="add-cart active"><a href="#" data-id="@item.Id">Add to cart</a></li>
-                                                <li><a class="links-details" href="#"><i class="fa fa-heart-o"></i></a></li>
+                                                <li class="add-wishlist"><a class="links-details" data-id="@item.Id" href="#"><i class="fa fa-heart-o"></i></a></li>
                                                 <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                             </ul>
                                         </div>

@@ -146,7 +146,7 @@
                                     </tr>`;
                         price += data[i].price * existed.count
                         unitCount += 1;
-                        productInfo += `Product name: ${data[i].name}, Quantity: ${existed.count}`;
+                        productInfo += `Product name: ${data[i].name}, Quantity: ${existed.count} `;
                     }
                     var price = parseFloat(localStorage.getItem("shoping-keys-price"))
                     $(".total-price-payment").text(`$${price}`)

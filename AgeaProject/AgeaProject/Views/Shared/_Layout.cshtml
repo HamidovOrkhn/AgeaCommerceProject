@@ -201,44 +201,7 @@
                                     <ul>
                                         <li><a asp-action="Index" asp-controller="Home">Home</a></li>
                                         <li><a asp-action="Index" asp-controller="AboutUs">About Us</a></li>
-                                        <li class="megamenu-holder nav-item">
-                                            <a href="shop-left-sidebar.html">Shop</a>
-                                            <ul class="megamenu hb-megamenu">
-                                                <li>
-                                                    <a href="shop-left-sidebar.html">Shop Page Layout</a>
-                                                    <ul>
-                                                        <li><a href="shop-3-column.html">Shop 3 Column</a></li>
-                                                        <li><a href="shop-4-column.html">Shop 4 Column</a></li>
-                                                        <li><a href="shop-left-sidebar.html">Shop Left Sidebar</a></li>
-                                                        <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>
-                                                        <li><a href="shop-list.html">Shop List</a></li>
-                                                        <li><a href="shop-list-left-sidebar.html">Shop List Left Sidebar</a></li>
-                                                        <li><a href="shop-list-right-sidebar.html">Shop List Right Sidebar</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a href="single-product-gallery-left.html">Single Product Style</a>
-                                                    <ul>
-                                                        <li><a href="single-product-carousel.html">Single Product Carousel</a></li>
-                                                        <li><a href="single-product-gallery-left.html">Single Product Gallery Left</a></li>
-                                                        <li><a href="single-product-gallery-right.html">Single Product Gallery Right</a></li>
-                                                        <li><a href="single-product-tab-style-top.html">Single Product Tab Style Top</a></li>
-                                                        <li><a href="single-product-tab-style-left.html">Single Product Tab Style Left</a></li>
-                                                        <li><a href="single-product-tab-style-right.html">Single Product Tab Style Right</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a href="single-product.html">Single Products</a>
-                                                    <ul>
-                                                        <li><a href="single-product.html">Single Product</a></li>
-                                                        <li><a href="single-product-sale.html">Single Product Sale</a></li>
-                                                        <li><a href="single-product-group.html">Single Product Group</a></li>
-                                                        <li><a href="single-product-normal.html">Single Product Normal</a></li>
-                                                        <li><a href="single-product-affiliate.html">Single Product Affiliate</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
+                                        <li><a asp-action="Index" asp-controller="Shop">Shop</a></li>
                                         <li><a asp-action="Index" asp-controller="Blog">Blog</a></li>
                                         <li><a asp-action="Index" asp-controller="Contact">Contact</a></li>
                                         <!-- Begin Header Bottom Menu Information Area -->
@@ -608,6 +571,8 @@
             LoadShopCard();
             ClickCartInit();
             RemoveItemInit();
+            ClickCartInitWishList();
+            LoadWishList();
         })
         function LoadShopCard() {
             var data = localStorage.getItem("shoping-keys")
@@ -656,10 +621,11 @@
 
     }
         function ClickCartInit() {
-                $('.add-cart a').click(function (e) {
+            $(document).on('click', '.add-cart a',function (e) {
                 e.preventDefault()
                 var id = $(this).attr('data-id');
-                $.get("@Url.Action("GetShopItem","Home")/" + id, function (data) {
+                if (id) {
+                    $.get("@Url.Action("GetShopItem","Home")/" + id, function (data) {
                     Swal.fire(
                         'Added to Cart!'
                     )
@@ -766,18 +732,47 @@
                     }
 
                 })
+                }
 
                 })
         }
-    //function ClickCartInitWishList() {
-    //    $('.links-details a').click(function (e) {
-    //        e.preventDefault()
-    //        var id = $(this).attr('data-id');
-    //        Swal.fire(
-    //            'Added to Cart!'
-    //        )
-    //    })
-    //                }
+    function ClickCartInitWishList() {
+        $('.add-wishlist a').click(function (e) {
+            e.preventDefault()
+            var id = $(this).attr('data-id');
+            var count = 0;
+            var items = localStorage.getItem('wishlist')
+            if (items) {
+                var keys = items.split(',')
+                if (!keys.includes(id)) {
+                    items += ',';
+                    items += id;
+                    count = keys.length;
+                    localStorage.setItem('wishlist', items);
+                    $('.wishlist-item-count').text(count+1);
+                    Swal.fire('Added to Wishlist!');
+                }
+                else {
+                    Swal.fire('Item is already in Wishlist!')
+                }
+            }
+            else {
+                count += 1;
+                $('.wishlist-item-count').text(count);
+                localStorage.setItem('wishlist', id);
+                Swal.fire('Added to Wishlist!');
+            }
+        })
+    }
+    function LoadWishList() {
+        var data = localStorage.getItem("wishlist")
+        count = 0
+        if (data) {
+            var items = data.split(',')
+            count = items.length;
+        }
+        $('.wishlist-item-count').text(count);
+    }
         function groupBy(val) {
             var obj = [];
             var iterator = val;

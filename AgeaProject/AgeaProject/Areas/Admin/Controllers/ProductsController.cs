@@ -28,7 +28,7 @@ namespace AgeaProject.Areas.Admin.Controllers
             int count = (int)Math.Ceiling(pagecount / 10);
 
             model.Pagination = ExConverter.PaginationMethod(page, count);
-            model.Data = data;
+            model.Data = data.Skip(page * 10).Take(10).ToList();
 
             return View(model);
         }
