@@ -4,6 +4,7 @@ using AgeaProject.Areas.Admin.ViewModels.Contact;
 using AgeaProject.Areas.Admin.ViewModels.Settings;
 using AgeaProject.Data;
 using AgeaProject.Models;
+using AgeaProject.ViewModels;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -84,5 +85,29 @@ namespace AgeaProject.Areas.Admin.Controllers
             }
             return RedirectToAction(nameof(Contact));
         }
+
+        public IActionResult BookIndex([FromQuery] int page = 0)
+        {
+            ContactUsViewModel model = new ContactUsViewModel();
+            List<ContactForm> data = _db.ContactForms.ToList();
+            float pagecount = data.Count;
+            int count = (int)Math.Ceiling(pagecount / 10);
+
+            model.Pagination = ExConverter.PaginationMethod(page, count);
+            model.Contactsform = data.Skip(page * 10).Take(10).ToList();
+            return View(model);
+        }
+        public IActionResult BookRemove(int id)
+        {
+            ContactForm data = _db.ContactForms.Find(id);
+            if (data is object)
+            {
+                _db.ContactForms.Remove(data);
+                _db.SaveChanges();
+            }
+            return RedirectToAction(nameof(BookIndex));
+
+        }
     }
+
 }

@@ -1,0 +1,73 @@
+﻿@model AgeaProject.ViewModels.ContactUsViewModel
+@{
+    ViewData["Title"] = "BookIndex";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h3>Questions</h3>
+    </div>
+</div>
+<div class="row justify-content-center mt-3">
+    <div class="col-12">
+        <table class="table table-bordered text-center">
+            <thead style="background-color: #e74a3b;color:white;">
+                <tr class="text-center">
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Text</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model is object)
+                {
+                    @foreach (var item in Model.Contactsform)
+                    {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.Subject</td>
+                    <td>@item.Text</td>
+                    <td>
+                        <a asp-action="BookRemove" asp-controller="Settings" asp-area="Admin" asp-route-id="@item.Id">Remove</a>
+                    </td>
+                </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item @(Model.Pagination.Page == 0 ? "disabled": "")">
+                    <a class="page-link" asp-route-page=0 tabindex="-1">First Page</a>
+                </li>
+                @for (int i = Model.Pagination.StartPage; i <= Model.Pagination.EndPage; i++)
+                {
+                    <li class="page-item @(Model.Pagination.Page == i ? "active": "")">
+                        <a class="page-link" asp-action="BookIndex" asp-controller="Settings" asp-area="Admin" asp-route-page=@i>@(i + 1)<span class="sr-only">(current)</span></a>
+                    </li>
+                }
+                <li class="page-item  @(Model.Pagination.Page == Model.Pagination.PageCount - 1 ? "disabled": "")">
+                    <a class="page-link" asp-action="BookIndex" asp-controller="Settings" asp-area="Admin" asp-route-page=@(Model.Pagination.PageCount-1)>Last Page</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+@section Scripts{
+    @if (TempData["Success-Product"] is object)
+    {
+        <input type="hidden" id="Success-Product" value="@TempData["Success-Product"]" />
+        <script>
+            Swal.fire(
+                'Success !',
+                $('#Success-Product').val(),
+                'success'
+            )
+        </script>
+    }
+
+}
+

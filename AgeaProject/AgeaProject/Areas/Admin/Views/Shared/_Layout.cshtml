@@ -84,8 +84,10 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Parameters</h6>
+                        <a class="collapse-item" asp-action="Index" asp-controller="AboutUs" asp-area="Admin">About Us</a>
                         <a class="collapse-item" asp-action="Slider" asp-controller="Settings" asp-area="Admin">Slider menu</a>
                         <a class="collapse-item" asp-action="Contact" asp-controller="Settings" asp-area="Admin">Contact Info</a>
+                        <a class="collapse-item" asp-action="bookindex" asp-controller="Settings" asp-area="Admin">Contact Form</a>
                     </div>
                 </div>
             </li>
@@ -93,13 +95,13 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                    aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-folder"></i>
-                    <span>İstifadəçilər</span>
+                    <span>Users</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Parametrlər</h6>
-                        <a class="collapse-item" asp-action="Index" asp-controller="User" asp-area="Admin">İstifadəçi siyahısı</a>
-                        <a class="collapse-item" asp-action="Create" asp-controller="User" asp-area="Admin">Qeydiyyat</a>
+                        <h6 class="collapse-header">Parameters</h6>
+                        <a class="collapse-item" asp-action="Index" asp-controller="User" asp-area="Admin">User List</a>
+                        <a class="collapse-item" asp-action="Create" asp-controller="User" asp-area="Admin">Register</a>
                     </div>
                 </div>
             </li>
