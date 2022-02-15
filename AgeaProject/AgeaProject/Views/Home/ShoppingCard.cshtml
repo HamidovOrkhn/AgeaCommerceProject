@@ -32,7 +32,6 @@
                                 </tr>
                             </thead>
                             <tbody class="shoppingcard-body">
-
                             </tbody>
                         </table>
                     </div>
@@ -41,9 +40,9 @@
                             <div class="cart-page-total">
                                 <h2>Cart totals</h2>
                                 <ul>
-                                    <li>Total <span>$130.00</span></li>
+                                    <li>Total <span class="total-price-shop">$0.00</span></li>
                                 </ul>
-                                <a href="#">Proceed to checkout</a>
+                                <a asp-action="Checkout" asp-controller="Home">Proceed to checkout</a>
                             </div>
                         </div>
                     </div>
@@ -52,10 +51,10 @@
         </div>
     </div>
 </div>
-@section Scripts{ 
+@section Scripts{
     <script>
-            LoadShopCard()
-            function LoadShopCard() {
+            LoadShopCardShop()
+        function LoadShopCardShop() {
             var data = localStorage.getItem("shoping-keys")
             if (data) {
             var splited = data.split(",")
@@ -86,6 +85,8 @@
                         price += data[i].price * existed.count
                         unitCount += 1;
                     }
+                    var price = parseFloat(localStorage.getItem("shoping-keys-price"))
+                    $(".total-price-shop").text(`$${price}`)
                     $('.shoppingcard-body').append(item)
                 },
 

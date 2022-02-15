@@ -2,6 +2,7 @@
 using AgeaProject.Extensions;
 using AgeaProject.Models;
 using AgeaProject.ViewModels;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -64,6 +65,23 @@ namespace AgeaProject.Controllers
         public IActionResult ShoppingCard()
         {
             return View();
+        }
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+        public IActionResult Wishlist()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Checkout(RequestProduct request)
+        {
+            Quotes quote = request.Adapt<Quotes>();
+            _db.Quotes.Add(quote);
+            _db.SaveChanges();
+            TempData["Success-Quote"] = "Your order sended to the Customer. They will pick you order as soon as they can !";
+            return RedirectToAction(nameof(Index));
         }
         [HttpPost]
         public IActionResult GetShop([FromBody]List<string> keys)

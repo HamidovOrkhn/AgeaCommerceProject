@@ -90,15 +90,7 @@
                         }
                         <div class="single-add-to-cart">
                             <form action="#" class="cart-quantity">
-                                <div class="quantity">
-                                    <label>Quantity</label>
-                                    <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" value="1" type="text">
-                                        <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                        <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                    </div>
-                                </div>
-                                <button class="add-to-cart" type="submit">Add to cart</button>
+                                <button class="add-to-cart add-cart" data-id="@(Model.Product is object ? Model.Product.Id : 0)" type="submit">Add to cart</button>
                             </form>
                         </div>
                         <div class="product-additional-info">
@@ -253,4 +245,156 @@
         </section>
     }
 
+}
+@section Scripts{
+    <script>
+        ClickCartInit();    
+            function ClickCartInit() {
+                $('.add-cart').click(function (e) {
+                e.preventDefault()
+                var id = $(this).attr('data-id');
+                $.get("@Url.Action("GetShopItem","Home")/" + id, function (data) {
+                    console.log(data)
+
+                    if (!localStorage.getItem("shoping-keys")) {
+                        localStorage.setItem("shoping-keys", id)
+                        $('.hm-minicart .minicart-product-list').empty();
+                        var item = `<li id="li${id}">
+                                                    <a href="/home/details/${id}" class="minicart-product-image">
+                                                        <img src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/${data.subCategoryCredentials ? data.subCategoryCredentials[0].src : ""}" alt="cart products">
+                                                    </a>
+                                                    <div class="minicart-product-details">
+                                                        <h6><a href="/home/details/${id}">${data.name}</a></h6>
+                                                        <span class="shop-item-price" data-price="${data.price}" data-count="${1}">$${data.price} x 1</span>
+                                                    </div>
+                                                    <a class="shop-item-close" data-id="${id}">
+                                                        <i class="fa fa-close"></i>
+                                                    </a>
+                                                </li>`;
+                        $('.hm-minicart .minicart-product-list').append(item);
+
+                        var price = 0;
+                        var unitCount = 0;
+                        if (localStorage.getItem("shoping-keys-price")) {
+                           price = parseFloat(localStorage.getItem("shoping-keys-price"))
+                        }
+                        if (localStorage.getItem("shoping-keys-count")) {
+                            unitCount =  parseInt(localStorage.getItem("shoping-keys-count"))
+                        }
+                        var newPrice = price + data.price
+                        var newUnitCount = unitCount + 1;
+                        $('.shop-price-icon').html(`$${newPrice}<span class="cart-item-count">${newUnitCount}</span>`)
+                        $('.shop-price-banner').text(`$${newPrice}`)
+                        localStorage.setItem("shoping-keys-price", newPrice)
+                        localStorage.setItem("shoping-keys-count", newUnitCount)
+                    }
+                    else {
+                        console.log('else state')
+                        var keysString = localStorage.getItem("shoping-keys");
+                        var keys = keysString.split(",");
+                        var exists = keys.includes(id);
+                        if (exists) {
+                            localStorage.setItem("shoping-keys", keysString + "," + id)
+                            keysString = keysString + "," + id;
+                            keys = keysString.split(",");
+                            var number = keys.filter(x => x === id).length
+                            var item = ` <a href="/home/details/${id}" class="minicart-product-image">
+                                                        <img src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/${data.subCategoryCredentials ? data.subCategoryCredentials[0].src : ""}" alt="cart products">
+                                                    </a>
+                                                    <div class="minicart-product-details">
+                                                        <h6><a href="/home/details/${id}">${data.name}</a></h6>
+                                                        <span class="shop-item-price" data-price="${data.price}" data-count="${number}" >$${data.price} x ${number}</span>
+                                                    </div>
+                                                    <a class="shop-item-close" data-id="${id}">
+                                                        <i class="fa fa-close"></i>
+                                                    </a>`;
+                            $("#li" + id).html(item);
+                            var price = 0;
+                            var unitCount = 0;
+                            if (localStorage.getItem("shoping-keys-price")) {
+                                price = parseFloat(localStorage.getItem("shoping-keys-price"))
+                            }
+                            if (localStorage.getItem("shoping-keys-count")) {
+                                unitCount = parseInt(localStorage.getItem("shoping-keys-count"))
+                            }
+                            var newPrice = price + data.price
+                            var newUnitCount = unitCount + 1;
+                            $('.shop-price-icon').html(`$${newPrice}<span class="cart-item-count">${newUnitCount}</span>`)
+                            $('.shop-price-banner').text(`$${newPrice}`)
+                            localStorage.setItem("shoping-keys-price", newPrice)
+                            localStorage.setItem("shoping-keys-count", newUnitCount)
+                        }
+                        else {
+                            var keysString = localStorage.getItem("shoping-keys");
+                            localStorage.setItem("shoping-keys", keysString + "," + id)
+                            var item = `<li id="li${id}">
+                                                    <a href="/home/details/${id}" class="minicart-product-image">
+                                                        <img src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/${data.subCategoryCredentials ? data.subCategoryCredentials[0].src : ""}" alt="cart products">
+                                                    </a>
+                                                    <div class="minicart-product-details">
+                                                        <h6><a href="/home/details/${id}">${data.name}</a></h6>
+                                                        <span class="shop-item-price" data-price="${data.price}" data-count="${1}">$${data.price} x 1</span>
+                                                    </div>
+                                                    <a class="shop-item-close" data-id="${id}">
+                                                        <i class="fa fa-close"></i>
+                                                    </a>
+                                                </li>`;
+                            $('.hm-minicart .minicart-product-list').append(item);
+                            var price = 0;
+                            var unitCount = 0;
+                            if (localStorage.getItem("shoping-keys-price")) {
+                                price = parseFloat(localStorage.getItem("shoping-keys-price"))
+                            }
+                            if (localStorage.getItem("shoping-keys-count")) {
+                                unitCount = parseInt(localStorage.getItem("shoping-keys-count"))
+                            }
+                            var newPrice = price + data.price
+                            var newUnitCount = unitCount + 1;
+                            $('.shop-price-icon').html(`$${newPrice}<span class="cart-item-count">${newUnitCount}</span>`)
+                            $('.shop-price-banner').text(`$${newPrice}`)
+                            localStorage.setItem("shoping-keys-price", newPrice)
+                            localStorage.setItem("shoping-keys-count", newUnitCount)
+                        }
+
+                    }
+
+                })
+
+            })
+            }
+        function groupBy(val) {
+            var obj = [];
+            var iterator = val;
+            for (var i = 0; i < iterator.length; i++) {
+                var existed = obj.find(({ id }) => id === iterator[i]);
+                if (existed) {
+                    existed.count += 1;
+                }
+                else {
+                    obj.push({ id: iterator[i], count: 1 })
+                }
+            }
+            return obj;
+        }
+        function returnKeys(arr) {
+            var obj = [];
+            for (var i = 0; i < arr.length; i++) {
+                obj.push(arr[i].id)
+            }
+            return obj;
+        }
+        function arrayRemove(arr, value) {
+
+            const newArray = [];
+
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] !== value) {
+                    newArray.push(arr[i]);
+                }
+            }
+            console.log(newArray)
+            return newArray;
+
+        }
+    </script>
 }

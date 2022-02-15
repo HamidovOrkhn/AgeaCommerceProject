@@ -51,66 +51,6 @@
     <div class="body-wrapper">
         <!-- Begin Header Area -->
         <header>
-            <!-- Begin Header Top Area -->
-            <!--<div class="header-top">
-                <div class="container">
-                    <div class="row">-->
-            <!-- Begin Header Top Left Area -->
-            <!--<div class="col-lg-3 col-md-4">
-                <div class="header-top-left">
-                    <ul class="phone-wrap">
-                        <li><span>Telephone Enquiry:</span><a href="#">(+123) 123 321 345</a></li>
-                    </ul>
-                </div>
-            </div>-->
-            <!-- Header Top Left Area End Here -->
-            <!-- Begin Header Top Right Area -->
-            <!--<div class="col-lg-9 col-md-8">
-                <div class="header-top-right">
-                    <ul class="ht-menu">-->
-            <!-- Begin Setting Area -->
-            <!--<li>
-                <div class="ht-setting-trigger"><span>Setting</span></div>
-                <div class="setting ht-setting">
-                    <ul class="ht-setting-list">
-                        <li><a href="login-register.html">My Account</a></li>
-                        <li><a href="checkout.html">Checkout</a></li>
-                        <li><a href="login-register.html">Sign In</a></li>
-                    </ul>
-                </div>
-            </li>-->
-            <!-- Setting Area End Here -->
-            <!-- Begin Currency Area -->
-            <!--<li>
-                <span class="currency-selector-wrapper">Currency :</span>
-                <div class="ht-currency-trigger"><span>USD $</span></div>
-                <div class="currency ht-currency">
-                    <ul class="ht-setting-list">
-                        <li><a href="#">EUR €</a></li>
-                        <li class="active"><a href="#">USD $</a></li>
-                    </ul>
-                </div>
-            </li>-->
-            <!-- Currency Area End Here -->
-            <!-- Begin Language Area -->
-            <!--<li>
-                <span class="language-selector-wrapper">Language :</span>
-                <div class="ht-language-trigger"><span>English</span></div>
-                <div class="language ht-language">
-                    <ul class="ht-setting-list">
-                        <li class="active"><a href="#"><img src="~/images/menu/flag-icon/1.jpg" alt="">English</a></li>
-                        <li><a href="#"><img src="~/images/menu/flag-icon/2.jpg" alt="">Français</a></li>
-                    </ul>
-                </div>
-            </li>-->
-            <!-- Language Area End Here -->
-            <!--</ul>
-                </div>
-            </div>-->
-            <!-- Header Top Right Area End Here -->
-            <!--</div>
-                </div>
-            </div>-->
             <!-- Header Top Area End Here -->
             <!-- Begin Header Middle Area -->
             <div class="header-middle pl-sm-0 pr-sm-0 pl-xs-0 pr-xs-0">
@@ -210,7 +150,7 @@
                                 <ul class="hm-menu">
                                     <!-- Begin Header Middle Wishlist Area -->
                                     <li class="hm-wishlist">
-                                        <a href="wishlist.html">
+                                        <a asp-action="Wishlist" asp-controller="Home">
                                             <span class="cart-item-count wishlist-item-count">0</span>
                                             <i class="fa fa-heart-o"></i>
                                         </a>
@@ -231,10 +171,10 @@
                                             </ul>
                                             <p class="minicart-total">SUBTOTAL: <span class="shop-price-banner">$0</span></p>
                                             <div class="minicart-button">
-                                                <a href="checkout.html" class="li-button li-button-dark li-button-fullwidth li-button-sm">
+                                                <a asp-action="ShoppingCard" asp-controller="Home" class="li-button li-button-dark li-button-fullwidth li-button-sm">
                                                     <span>View Full Cart</span>
                                                 </a>
-                                                <a href="checkout.html" class="li-button li-button-fullwidth li-button-sm">
+                                                <a asp-action="Checkout" asp-controller="Home" class="li-button li-button-fullwidth li-button-sm">
                                                     <span>Checkout</span>
                                                 </a>
                                             </div>
@@ -302,7 +242,7 @@
                                         <li><a asp-action="Index" asp-controller="Blog">Blog</a></li>
                                         <li><a asp-action="Index" asp-controller="Contact">Contact</a></li>
                                         <!-- Begin Header Bottom Menu Information Area -->
-                                        @await Component.InvokeAsync("ContactHeader")
+                                        @*@await Component.InvokeAsync("ContactHeader")*@
                                         <!-- Header Bottom Menu Information Area End Here -->
                                     </ul>
                                 </nav>
@@ -597,7 +537,7 @@
                                             </form>
                                         </div>
                                         <div class="product-additional-info pt-25">
-                                            <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a>
+                                            <a class="wishlist-btn" href="#"><i class="fa fa-heart-o"></i>Add to wishlist</a>
                                             <div class="product-social-sharing pt-25">
                                                 <ul>
                                                     <li class="facebook"><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
@@ -660,6 +600,8 @@
     <script src="~/js/scrollUp.min.js"></script>
     <!-- Main/Activator js -->
     <script src="~/js/main.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     @RenderSection("Scripts", false)
 <script>
         $(document).ready(function () {
@@ -718,8 +660,9 @@
                 e.preventDefault()
                 var id = $(this).attr('data-id');
                 $.get("@Url.Action("GetShopItem","Home")/" + id, function (data) {
-                    console.log(data)
-
+                    Swal.fire(
+                        'Added to Cart!'
+                    )
                     if (!localStorage.getItem("shoping-keys")) {
                         localStorage.setItem("shoping-keys", id)
                         $('.hm-minicart .minicart-product-list').empty();
@@ -824,8 +767,17 @@
 
                 })
 
-            })
-            }
+                })
+        }
+    //function ClickCartInitWishList() {
+    //    $('.links-details a').click(function (e) {
+    //        e.preventDefault()
+    //        var id = $(this).attr('data-id');
+    //        Swal.fire(
+    //            'Added to Cart!'
+    //        )
+    //    })
+    //                }
         function groupBy(val) {
             var obj = [];
             var iterator = val;
@@ -858,7 +810,7 @@
             }
             console.log(newArray)
             return newArray;
-    
+
         }
         function RemoveItemInit() {
             $(document).on('click','.shop-item-close',function (e) {
@@ -867,7 +819,7 @@
                 var keysString = localStorage.getItem("shoping-keys");
                 var keys = keysString.split(",");
                 var newkeys = arrayRemove(keys, id);
-                
+
                 var newString = "";
                 for (var i = 0; i < newkeys.length; i++) {
                     newString += newkeys[i];
@@ -889,9 +841,13 @@
                 var newCount = countLocal - 1;
                 $('.shop-price-icon').html(`$${newPrice}<span class="cart-item-count">${newCount}</span>`)
                 $('.shop-price-banner').text(`$${newPrice}`)
+                $('.total-price-shop').text(`$${newPrice}`)
+                $('.total-price-payment').text(`$${newPrice}`)
                 localStorage.setItem("shoping-keys-price", newPrice);
                 localStorage.setItem("shoping-keys-count", newCount);
                 $("#li" + id).remove();
+                $("#tr" + id).remove();
+                $("#payment" + id).remove();
             })
         }
 </script>

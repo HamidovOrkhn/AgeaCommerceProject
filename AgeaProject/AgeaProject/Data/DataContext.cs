@@ -34,6 +34,9 @@ namespace AgeaProject.Data
             builder.ApplyConfiguration(new CategoryFluent());
             builder.ApplyConfiguration(new SubCategoryFluent());
             builder.ApplyConfiguration(new SubCategoryCredentialFluent());
+            builder.ApplyConfiguration(new SliderAdFluent());
+            builder.ApplyConfiguration(new ContactUsFluent());
+            builder.ApplyConfiguration(new QuotesFluent());
         }
 
 
@@ -48,5 +51,6 @@ namespace AgeaProject.Data
         public DbSet<ContactUs> ContactUs { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Slider> Sliders { get; set; }
+        public DbSet<Quotes> Quotes { get; set; }
     }
 }

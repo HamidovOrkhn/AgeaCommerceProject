@@ -1,0 +1,197 @@
+﻿@model RequestProduct
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li class="active">Checkout</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<form asp-action="Checkout" asp-controller="Home" method="post">
+    <div class="checkout-area pt-60 pb-30">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6 col-12">
+                    <div class="checkbox-form">
+                        <h3>Request Details</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="checkout-form-list">
+                                    <label>First Name <span class="required">*</span></label>
+                                    <input asp-for="Name" placeholder="" type="text">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="checkout-form-list">
+                                    <label>Last Name <span class="required">*</span></label>
+                                    <input asp-for="Surname" placeholder="" type="text">
+                                    <span asp-validation-for="Surname" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>Address <span class="required">*</span></label>
+                                    <input asp-for="Address" placeholder="Street address" type="text">
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="checkout-form-list">
+                                    <label>Email Address <span class="required">*</span></label>
+                                    <input asp-for="Email" placeholder="" type="email">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="checkout-form-list">
+                                    <label>Phone  <span class="required">*</span></label>
+                                    <input asp-for="Phone" type="text">
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <input asp-for="OrderDetails" type="hidden"  id="OrderDetails"/>
+                        <div class="order-notes">
+                            <div class="checkout-form-list">
+                                <label>Order Notes</label>
+                                <textarea asp-for="Desc" id="checkout-mess" cols="30" rows="10" placeholder="Notes about your order, e.g. special notes about size and etc."></textarea>
+                                <span asp-validation-for="Desc" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <div class="your-order">
+                        <h3>Your order</h3>
+                        <div class="your-order-table table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="cart-product-name">Product</th>
+                                        <th class="cart-product-total">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="payment-body">
+
+                                </tbody>
+                                <tfoot>
+                                    <tr class="order-total">
+                                        <th>Order Total</th>
+                                        <td><strong><span class="amount-checkout total-price-payment">$0.00</span></strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="payment-method">
+                            <div class="payment-accordion">
+                                <div id="accordion">
+                                    <div class="card">
+                                        <div class="card-header" id="#payment-1">
+                                            <h5 class="panel-title">
+                                                <a class="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    Direct Bank Transfer.
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-button-payment">
+                                    <input value="Place Quote" type="submit" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+            LoadShopCardPayment()
+    function LoadShopCardPayment() {
+            var data = localStorage.getItem("shoping-keys")
+            if (data) {
+            var splited = data.split(",")
+                var group_of_items = groupBy(splited);
+                var keys = returnKeys(group_of_items);
+                var price = 0;
+                var unitCount = 0;
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetShop", "Home")",
+                data: JSON.stringify(keys),
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var item = "";
+                    var productInfo = ""
+                    for (var i = 0; i < data.length; i++) {
+                        var existed = group_of_items.find(({ id }) => id === `${data[i].id}`);
+                        console.log(existed + "existed")
+                        console.log(group_of_items)
+                        item += `<tr class="cart_item" id="payment${data[i].id}">
+                                        <td class="cart-product-name">${data[i].name}<strong class="product-quantity"> × ${existed.count}</strong></td>
+                                        <td class="cart-product-total"><span class="amount">$${data[i].price * existed.count}</span></td>
+                                    </tr>`;
+                        price += data[i].price * existed.count
+                        unitCount += 1;
+                        productInfo += `Product name: ${data[i].name}, Quantity: ${existed.count}`;
+                    }
+                    var price = parseFloat(localStorage.getItem("shoping-keys-price"))
+                    $(".total-price-payment").text(`$${price}`)
+                    $('#OrderDetails').val(productInfo)
+                    $('.payment-body').append(item)
+                },
+
+            });
+            }
+
+
+        }
+        function groupBy(val) {
+            var obj = [];
+            var iterator = val;
+            for (var i = 0; i < iterator.length; i++) {
+                var existed = obj.find(({ id }) => id === iterator[i]);
+                if (existed) {
+                    existed.count += 1;
+                }
+                else {
+                    obj.push({ id: iterator[i], count: 1 })
+                }
+            }
+            return obj;
+        }
+        function returnKeys(arr) {
+            var obj = [];
+            for (var i = 0; i < arr.length; i++) {
+                obj.push(arr[i].id)
+            }
+            return obj;
+        }
+        function arrayRemove(arr, value) {
+
+            const newArray = [];
+
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] !== value) {
+                    newArray.push(arr[i]);
+                }
+            }
+            console.log(newArray)
+            return newArray;
+
+        }
+</script>
+}

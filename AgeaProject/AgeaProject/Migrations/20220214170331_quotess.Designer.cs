@@ -3,14 +3,16 @@ using System;
 using AgeaProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AgeaProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220214170331_quotess")]
+    partial class quotess
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,23 +148,16 @@ namespace AgeaProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("text");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)")
-                        .HasMaxLength(20);
+                        .HasColumnType("text");
 
                     b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("varchar(500)")
-                        .HasMaxLength(500);
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -176,40 +171,28 @@ namespace AgeaProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("varchar(101)")
-                        .HasMaxLength(101);
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("DDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("Desc")
-                        .IsRequired()
-                        .HasColumnType("varchar(201)")
-                        .HasMaxLength(201);
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("varchar(51)")
-                        .HasMaxLength(51);
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(71)")
-                        .HasMaxLength(71);
+                        .HasColumnType("text");
 
                     b.Property<string>("OrderDetails")
                         .HasColumnType("text");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("varchar(41)")
-                        .HasMaxLength(41);
+                        .HasColumnType("text");
 
                     b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("varchar(71)")
-                        .HasMaxLength(71);
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -275,21 +258,16 @@ namespace AgeaProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Src")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("text");
 
                     b.Property<string>("TextBody")
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("text");
 
                     b.Property<string>("TextFooter")
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("text");
 
                     b.Property<string>("TextHeader")
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
