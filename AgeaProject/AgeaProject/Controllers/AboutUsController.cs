@@ -1,4 +1,5 @@
 ﻿using AgeaProject.Data;
+using AgeaProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace AgeaProject.Controllers
         }
         public IActionResult Index()
         {
-            var data = _db.AboutUs.FirstOrDefault();
+            AboutUs data = _db.AboutUs.OrderByDescending(m=>m.Id).FirstOrDefault();
             return View(data);
         }
     }

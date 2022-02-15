@@ -8,7 +8,7 @@
     <div class="container">
         <div class="breadcrumb-content">
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                 <li class="active">About Us</li>
             </ul>
         </div>
@@ -22,18 +22,24 @@
             <!-- About Text Start -->
             <div class="col-lg-6 order-last order-lg-first">
                 <div class="about-text-wrap">
-                    <h2><span>@Model.Name</span>@Model.Title</h2>
-                    <p>
-                        @Html.Raw(Model.Text)
-                    </p>
+                    @if (Model is object)
+                    {
+                        <h2><span>@Model.Name</span>@Model.Title</h2>
+                        <p>
+                            @Html.Raw(Model.Text)
+                        </p>
+                    }
                 </div>
             </div>
             <!-- About Text End -->
             <!-- About Image Start -->
             <div class="col-lg-5 col-md-10">
                 <div class="about-image-wrap">
-                    <img class="img-full" src="~/images/product/large-size/@Model.Image" alt="About Us" />
-                </div>
+                    @if (Model is object)
+                    {
+                        <img class="img-full" src="~/uploads/@Model.Image" alt="About Us" />
+                    }
+                    </div>
             </div>
             <!-- About Image End -->
         </div>

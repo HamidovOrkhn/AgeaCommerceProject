@@ -22,9 +22,9 @@ namespace AgeaProject.Controllers
                 .Take(9).ToList();
             return View(blog);
         }
-        public IActionResult Single(int id)
+        public IActionResult Single([FromForm] int id)
         {
-            Blog blog = _db.Blogs.Where(m=>m.Id == id).FirstOrDefault();
+            Blog blog = _db.Blogs.Find(id);
             return View(blog);
         }
     }

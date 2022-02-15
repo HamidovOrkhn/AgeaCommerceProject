@@ -8,7 +8,7 @@
     <div class="container">
         <div class="breadcrumb-content">
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                 <li class="active">Blog Gallery Format</li>
             </ul>
         </div>
@@ -51,32 +51,38 @@
                         <div class="li-blog-single-item pb-40">
                             <div class="li-blog-gallery-slider slick-dot-style">
                                 <div class="li-blog-banner">
-                                    <a href="blog-details.html"><img class="img-full" src="~/images/blog-banner/@Model.Image" alt="Product Image"></a>
+                                    @if (Model is object)
+                                    {
+                                        <a href="blog-details.html"><img class="img-full" src="~/images/blog-banner/@Model.Image" alt="Product Image"></a>
+                                    }
                                 </div>
                             </div>
                             <div class="li-blog-content">
                                 <div class="li-blog-details">
-                                    <h3 class="li-blog-heading pt-35"><a href="blog-details.html">@Model.Title</a></h3>
-                                    <div class="li-blog-meta">
-                                        <a class="author" href="#"><i class="fa fa-user"></i>Admin</a>
-                                        <a class="post-time" href="#"><i class="fa fa-calendar"></i>@Model.CreatedDate.ToString("dd MMM yyyy")</a>
-                                    </div>
-                                    <!-- Begin Blog Blockquote Area -->
-                                    <div class="li-blog-blockquote">
-                                        <blockquote>
-                                            <p>
-                                                @Html.Raw(Model.Text)
-                                            </p>
-                                        </blockquote>
-                                    </div>
-                                    <!-- Blog Blockquote Area End Here -->
-                                    <div class="li-blog-sharing text-center pt-30">
-                                        <h4>share this post:</h4>
-                                        <a href="#"><i class="fa fa-facebook"></i></a>
-                                        <a href="#"><i class="fa fa-twitter"></i></a>
-                                        <a href="#"><i class="fa fa-pinterest"></i></a>
-                                        <a href="#"><i class="fa fa-google-plus"></i></a>
-                                    </div>
+                                    @if (Model is object)
+                                    {
+                                        <h3 class="li-blog-heading pt-35"><a href="blog-details.html">@Model.Title</a></h3>
+                                        <div class="li-blog-meta">
+                                            <a class="author" href="#"><i class="fa fa-user"></i>Admin</a>
+                                            <a class="post-time" href="#"><i class="fa fa-calendar"></i>@Model.CreatedDate.ToString("dd MMM yyyy")</a>
+                                        </div>
+                                        <!-- Begin Blog Blockquote Area -->
+                                        <div class="li-blog-blockquote">
+                                            <blockquote>
+                                                <p>
+                                                    @Html.Raw(Model.Text)
+                                                </p>
+                                            </blockquote>
+                                        </div>
+                                        <!-- Blog Blockquote Area End Here -->
+                                        <div class="li-blog-sharing text-center pt-30">
+                                            <h4>share this post:</h4>
+                                            <a href="#"><i class="fa fa-facebook"></i></a>
+                                            <a href="#"><i class="fa fa-twitter"></i></a>
+                                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                                            <a href="#"><i class="fa fa-google-plus"></i></a>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
