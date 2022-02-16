@@ -129,10 +129,10 @@
                                         <div class="product_desc_info">
                                             <div class="product-review">
                                                 <h5 class="manufacturer">
-                                                    <a href="shop-left-sidebar.html">@item.Category.Name</a>
+                                                    <a asp-action="Index" asp-controller="Shop">@item.Category.Name</a>
                                                 </h5>
                                             </div>
-                                            <h4><a class="product_name" asp-action="Details" asp-controller="Home" asp-route-id="@item.Id">Accusantium dolorem1</a></h4>
+                                            <h4><a class="product_name" asp-action="Details" asp-controller="Home" asp-route-id="@item.Id">@item.Name</a></h4>
                                             <div class="price-box">
                                                 <span class="new-price">$ @item.Price</span>
                                             </div>
@@ -201,10 +201,10 @@
                                         <div class="product_desc_info">
                                             <div class="product-review">
                                                 <h5 class="manufacturer">
-                                                    <a href="shop-left-sidebar.html">@item.Category.Name</a>
+                                                    <a asp-action="Index" asp-controller="Shop">@item.Category.Name</a>
                                                 </h5>
                                             </div>
-                                            <h4><a class="product_name" href="single-product.html">@item.Name</a></h4>
+                                            <h4><a class="product_name" asp-action="Details" asp-controller="Home" asp-route-id="@item.Id">@item.Name</a></h4>
                                             <div class="price-box">
                                                 <span class="new-price">$@item.Price</span>
                                             </div>
@@ -1060,6 +1060,18 @@
                 'Successful Process!',
                 $('#Success-Quote').val(),
                 'success'
+            )
+            localStorage.clear();
+        </script>
+    }
+    @if (TempData["Fail-Search"] is object)
+    {
+        <input type="hidden" id="Fail-Search" value="@TempData["Fail-Search"]" />
+        <script>
+            Swal.fire(
+                'Could not Find',
+                $('#Fail-Search').val(),
+                'error'
             )
             localStorage.clear();
         </script>
