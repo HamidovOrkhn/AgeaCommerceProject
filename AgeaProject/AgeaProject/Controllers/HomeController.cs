@@ -31,7 +31,7 @@ namespace AgeaProject.Controllers
                 .ToList()
                 .TakeLastSafe(2)
                 .ToList();
-            List<Category> dataNav = _db.Categories.Include(a => a.SubCategory).AsEnumerable().Select(a => new Category { Id = a.Id, Name = a.Name, SubCategory = a.SubCategory.TakeLastSafe(10) }).ToList();
+            List<Category> dataNav = _db.Categories.Include(a => a.SubCategory).AsEnumerable().Select(a => new Category { Id = a.Id, Name = a.Name, SubCategory = a.SubCategory.TakeLastSafe(10), Src = a.Src }).ToList();
             List<Category> dataNew = _db.Categories.ToList().TakeLastSafe(2).ToList();
             List<SubCategory> datanNewSubCategory = _db.SubCategories.Include(a=>a.Category).ToList().TakeSafe(8).ToList();
             List<SubCategory> dataMostSubCategory = _db.SubCategories.Include(a => a.Category).Include(a=>a.SubCategoryCredentials).ToList().TakeLastSafe(8).ToList();

@@ -19,7 +19,7 @@
                 <!-- Begin Li's Banner Area -->
                 <div class="single-banner shop-page-banner">
                     <a href="#">
-                        <img src="images/bg-banner/2.jpg" alt="Li's Static Banner">
+                        <img src="~/uploads/banners/outdoor-fire-pit.jpg" alt="Li's Static Banner">
                     </a>
                 </div>
                 <!-- Li's Banner Area End Here -->
@@ -44,8 +44,8 @@
                                             <!-- single-product-wrap start -->
                                             <div class="single-product-wrap">
                                                 <div class="product-image">
-                                                    <a href="single-product.html">
-                                                        <img src="~/uploads/@item.Src" alt="@item.Name">
+                                                    <a asp-action="Index" asp-controller="Products" asp-route-categoryId="@item.Id">
+                                                        <img height="300" src="~/uploads/@item.Src" alt="@item.Name">
                                                     </a>
                                                 </div>
                                                 <div class="product_desc">
@@ -54,7 +54,7 @@
                                                     </div>
                                                     <div class="add-actions text-center">
                                                         <ul class="add-actions-link">
-                                                            <li class="add-cart active"><a href="#">Products</a></li>
+                                                            <li class="add-cart active"><a asp-action="Index" asp-controller="Products" asp-route-categoryId="@item.Id">Products</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>

@@ -21,7 +21,7 @@
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
     }
 </style>
-<div class="content-wraper">
+<div class="content-wraper mt-3">
     <div class="container">
         <div class="row single-product-area">
             <div class="col-lg-5 col-md-6">
@@ -31,16 +31,15 @@
                         @foreach (var item in Model.Product is object ? Model.Product.SubCategoryCredentials.OrderByDescending(a => a.Id).AsEnumerable() : new List<SubCategoryCredential>())
                         {
                             <div class="lg-image" data-id="data">
-                                <img class="enlarge@(item.Id)" data-zoom="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" alt="product image">
-                                <div class="box@(item.Id)"></div>
+                                <img height="500" class="enlarge@(item.Id)" data-zoom="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" alt="product image">
                             </div>
                         }
                     </div>
-                    <div class="product-details-thumbs slider-thumbs-1">
+                    <div class="product-details-thumbs slider-thumbs-1 mt-5">
                         @foreach (var item in Model.Product is object ? Model.Product.SubCategoryCredentials.OrderByDescending(a => a.Id).AsEnumerable() : new List<SubCategoryCredential>())
                         {
                             <div class="sm-image">
-                                <img data-product-image data-zoom="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" alt="product image thumb">
+                                <img width="250" height="110" data-product-image data-zoom="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" alt="product image thumb">
                             </div>
                         }
                     </div>

@@ -18,18 +18,28 @@
                             @foreach (var item in Model.CategoriesNav.TakeSafe(8))
                             {
                                 <li class="right-menu">
-                                    <a href="shop-left-sidebar.html">@item.Name</a>
+                                    <a asp-action="Index" asp-controller="Shop">@item.Name</a>
                                     <ul class="cat-mega-menu">
                                         <li class="right-menu cat-mega-title">
-                                            <a href="shop-left-sidebar.html">@item.Name</a>
+                                            <a asp-action="Index" asp-controller="Shop">@item.Name</a>
                                             <ul>
                                                 @foreach (var subItem in item.SubCategory)
                                                 {
-                                                    <li><a href="#">@subItem.Name</a></li>
+                                                    <li><a asp-action="Details" asp-controller="Home" asp-route-id="@subItem.Id">@subItem.Name</a></li>
                                                 }
 
                                             </ul>
                                         </li>
+                                        @*<li class="right-menu cat-mega-title">
+                                            <ul>
+                                            </ul>
+                                        </li>*@
+                                        <li class="right-menu cat-mega-title" >
+                                            <ul>
+                                                <img style="opacity:0.7" height="200" width="300" src="./uploads/@item.Src">
+                                            </ul>
+                                        </li>
+                                        
                                     </ul>
                                 </li>
                             }
@@ -60,12 +70,12 @@
                             <!-- Begin Single Slide Area -->
                             <div class="single-slide align-center-left animation-style-02 bg-4" style="background-image: url('@Url.Content("~/uploads/"+ item.Src)') !important;">
                                 <div class="slider-progress"></div>
-                                <div class="slider-content">
+                                <div class="slider-content" style="color:white">
                                     <h5>@item.TextHeader</h5>
                                     <h2>@item.TextBody</h2>
                                     <h3>@item.TextFooter</h3>
                                     <div class="default-btn slide-btn">
-                                        <a class="links" href="shop-left-sidebar.html">Shopping Now</a>
+                                        <a class="links" asp-action="Index" asp-controller="Shop">Shopping Now</a>
                                     </div>
                                 </div>
                             </div>
@@ -89,8 +99,8 @@
             {
                 <div class="col-lg-6 col-md-6">
                     <div class="single-banner pb-xs-30">
-                        <a href="#">
-                            <img src="~/uploads/@item.Src" alt="Li's Static Banner">
+                        <a asp-action="Index" asp-controller="Shop">
+                            <img height="300" style="border:solid 1px lightgray" src="~/uploads/@item.Src" alt="Li's Static Banner">
                         </a>
                     </div>
                 </div>
@@ -121,7 +131,7 @@
                                 <div class="single-product-wrap">
                                     <div class="product-image">
                                         <a asp-action="Details" asp-controller="Home" asp-route-id="@item.Id">
-                                            <img src="~/uploads/@(item.SubCategoryCredentials.OrderByDescending(a=>a.Id).FirstOrDefault() is object ? item.SubCategoryCredentials.OrderByDescending(a=>a.Id).FirstOrDefault().Src :"")" alt="@item.Name">
+                                            <img height="250" src="~/uploads/@(item.SubCategoryCredentials.OrderByDescending(a=>a.Id).FirstOrDefault() is object ? item.SubCategoryCredentials.OrderByDescending(a=>a.Id).FirstOrDefault().Src :"")" alt="@item.Name">
                                         </a>
                                         <span class="sticker">New</span>
                                     </div>
@@ -141,7 +151,6 @@
                                             <ul class="add-actions-link">
                                                 <li class="add-cart active"><a href="#" data-id="@item.Id">Add to cart</a></li>
                                                 <li class="add-wishlist"><a class="links-details" href="#" data-id="@item.Id"><i class="fa fa-heart-o"></i></a></li>
-                                                <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -176,8 +185,8 @@
                             <!-- Begin Single Banner Area -->
                             <div class="col-lg-6 col-md-6">
                                 <div class="single-banner">
-                                    <a href="#">
-                                        <img src="~/uploads/@item.Src" alt="Li's Static Banner">
+                                    <a asp-action="Index" asp-controller="Shop">
+                                        <img height="300" style="border:solid 1px lightgray" src="~/uploads/@item.Src" alt="Li's Static Banner">
                                     </a>
                                 </div>
                             </div>
@@ -194,7 +203,7 @@
                                 <div class="single-product-wrap">
                                     <div class="product-image">
                                         <a asp-action="Details" asp-controller="Home" asp-route-id="@item.Id">
-                                            <img src="~/uploads/@(item.SubCategoryCredentials.OrderByDescending(a=>a.Id).FirstOrDefault() is object ? item.SubCategoryCredentials.OrderByDescending(a=>a.Id).FirstOrDefault().Src :"")" alt="@item.Name">
+                                            <img height="200" src="~/uploads/@(item.SubCategoryCredentials.OrderByDescending(a=>a.Id).FirstOrDefault() is object ? item.SubCategoryCredentials.OrderByDescending(a=>a.Id).FirstOrDefault().Src :"")" alt="@item.Name">
                                         </a>
                                     </div>
                                     <div class="product_desc">
@@ -247,7 +256,7 @@
                         <span> $1209.00</span>
                     </p>
                     <div class="default-btn">
-                        <a href="shop-left-sidebar.html" class="links">Shopping Now</a>
+                        <a asp-action="Index" asp-controller="Shop" class="links">Shopping Now</a>
                     </div>
                 </div>
                 <!-- Li's Static Home Content Area End Here -->

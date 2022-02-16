@@ -23,7 +23,6 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Auth\" />
     <Folder Include="wwwroot\admin\" />
-    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>
