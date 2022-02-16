@@ -20,11 +20,12 @@ namespace AgeaProject.Controllers
         }
         public IActionResult Index([FromQuery] int page = 0, [FromQuery] int categoryId = 0)
         {
-            GlobalIndexViewModel<SubCategory> model = new GlobalIndexViewModel<SubCategory>();
-            List<SubCategory> data = _db.SubCategories.Include(a=>a.SubCategoryCredentials).ToList();
-            if (categoryId>0)
+            ProductIndexViewModel model = new ProductIndexViewModel();
+            List<SubCategory> data = _db.SubCategories.Include(a => a.SubCategoryCredentials).Include(a => a.Category).ToList();
+            List<Category> categories = _db.Categories.AsEnumerable().Select(a => new Category { Id = a.Id, Name = a.Name }).ToList();
+            if (categoryId > 0)
             {
-                data.Where(a => a.CategoryId == categoryId).ToList();
+                data = data.Where(a => a.CategoryId == categoryId).ToList();
             }
             float pagecount = data.Count;
             int count = (int)Math.Ceiling(pagecount / 12);
@@ -33,6 +34,7 @@ namespace AgeaProject.Controllers
             model.Pagination.Count = data.Count;
             model.Pagination.CountInPage = 12;
             model.Data = data.Skip(page * 12).Take(9).ToList();
+            model.Categories = categories;
             return View(model);
         }
     }

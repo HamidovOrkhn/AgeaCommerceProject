@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Shop";
 }
-@model GlobalIndexViewModel<SubCategory>
+@model ProductIndexViewModel
 <div class="breadcrumb-area">
     <div class="container">
         <div class="breadcrumb-content">
@@ -37,24 +37,42 @@
                             <!-- shop-item-filter-list end -->
                         </div>
                         <div class="toolbar-amount">
-                            <span>Showing @((Model.Pagination.Page * Model.Pagination.CountInPage) > 0 ? (Model.Pagination.Page * Model.Pagination.CountInPage):1) to @(Model.Pagination.CountInPage * (Model.Pagination.Page +1) > Model.Pagination.Count? Model.Pagination.Count: Model.Pagination.CountInPage) of @Model.Pagination.Count</span>
+                            <span>Showing @((Model.Pagination.Page * Model.Pagination.CountInPage) > 0 ? (Model.Pagination.Page * Model.Pagination.CountInPage) : 1) to @(Model.Pagination.CountInPage * (Model.Pagination.Page + 1) > Model.Pagination.Count ? Model.Pagination.Count : Model.Pagination.CountInPage) of @Model.Pagination.Count</span>
                         </div>
                     </div>
+                    @{
+                        int value = 0;
+                        if (ViewContext.HttpContext.Request.Query["categoryId"] != string.Empty)
+                        {
+                            value = Convert.ToInt32(ViewContext.HttpContext.Request.Query["categoryId"]);
+                        }
+                    }
                     <!-- product-select-box start -->
-                    <div class="product-select-box">
-                        <div class="product-short">
-                            <p>Sort By:</p>
-                            <select class="nice-select">
-                                <option value="trending">Relevance</option>
-                                <option value="sales">Name (A - Z)</option>
-                                <option value="sales">Name (Z - A)</option>
-                                <option value="rating">Price (Low &gt; High)</option>
-                                <option value="date">Rating (Lowest)</option>
-                                <option value="price-asc">Model (A - Z)</option>
-                                <option value="price-asc">Model (Z - A)</option>
-                            </select>
+                    <form asp-action="Index" asp-controller="Products" method="get">
+                        <div class="product-select-box">
+                            <div class="product-short">
+                                <p>Category:</p>
+                                <select name="categoryId" class="nice-select ml-3 mr-3">
+                                    <option selected value="0">All</option>
+                                    @if (Model.Categories is object)
+                                    {
+                                        foreach (var item in Model.Categories)
+                                        {
+                                            if (item.Id == value)
+                                            {
+                                                <option selected value="@item.Id">@item.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Id">@item.Name</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-sm ml-2 mr-2">Filter</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                     <!-- product-select-box end -->
                 </div>
                 <!-- shop-top-bar end -->
@@ -64,99 +82,91 @@
                         <div id="grid-view" class="tab-pane fade active show" role="tabpanel">
                             <div class="product-area shop-product-area">
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 col-sm-6 mt-40">
-                                        <!-- single-product-wrap start -->
-                                        <div class="single-product-wrap">
-                                            <div class="product-image">
-                                                <a href="single-product.html">
-                                                    <img src="images/product/large-size/1.jpg" alt="Li's Product Image">
-                                                </a>
-                                                <span class="sticker">New</span>
-                                            </div>
-                                            <div class="product_desc">
-                                                <div class="product_desc_info">
-                                                    <div class="product-review">
-                                                        <h5 class="manufacturer">
-                                                            <a href="product-details.html">Graphic Corner</a>
-                                                        </h5>
-                                                        <div class="rating-box">
-                                                            <ul class="rating">
-                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                    @if (Model.Data is object)
+                                    {
+                                        @foreach (var item in Model.Data)
+                                        {
+                                            <div class="col-lg-3 col-md-4 col-sm-6 mt-40">
+                                                <!-- single-product-wrap start -->
+                                                <div class="single-product-wrap">
+                                                    <div class="product-image">
+                                                        <a asp-action="Details" asp-controller="Home" asp-route-id="@item.Id">
+                                                            <img src="~/uploads/@(item.SubCategoryCredentials is object ? item.SubCategoryCredentials.OrderByDescending(a=>a.Id).FirstOrDefault().Src:"")" alt="Li's Product Image">
+                                                        </a>
+                                                    </div>
+                                                    <div class="product_desc">
+                                                        <div class="product_desc_info">
+                                                            <div class="product-review">
+                                                                <h5 class="manufacturer">
+                                                                    <a asp-action="Details" asp-controller="Home" asp-route-id="@item.Id" >@item.Category.Name</a>
+                                                                </h5>
+                                                            </div>
+                                                            <h4><a class="product_name" asp-action="Details" asp-controller="Home" asp-route-id="@item.Id" >@item.Name</a></h4>
+                                                            <div class="price-box">
+                                                                <span class="new-price">$ @item.Price</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="add-actions">
+                                                            <ul class="add-actions-link">
+                                                                <li class="add-cart active"><a data-id="@item.Id" href="#">Add to cart</a></li>
+                                                                <li class="add-wishlist"><a data-id="@item.Id" class="links-details" href="#"><i class="fa fa-heart-o"></i></a></li>
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
-                                                    <div class="price-box">
-                                                        <span class="new-price">$46.80</span>
-                                                    </div>
                                                 </div>
-                                                <div class="add-actions">
-                                                    <ul class="add-actions-link">
-                                                        <li class="add-cart active"><a href="shopping-cart.html">Add to cart</a></li>
-                                                        <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
-                                                        <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                                    </ul>
-                                                </div>
+                                                <!-- single-product-wrap end -->
                                             </div>
-                                        </div>
-                                        <!-- single-product-wrap end -->
-                                    </div>
+                                        }
+                                    }
                                 </div>
                             </div>
                         </div>
                         <div id="list-view" class="tab-pane product-list-view fade" role="tabpanel">
                             <div class="row">
+                                @if (Model.Data is object)
+                                {
                                 <div class="col">
-                                    <div class="row product-layout-list">
-                                        <div class="col-lg-3 col-md-5 ">
-                                            <div class="product-image">
-                                                <a href="single-product.html">
-                                                    <img src="images/product/large-size/12.jpg" alt="Li's Product Image">
-                                                </a>
-                                                <span class="sticker">New</span>
+
+                                    @foreach (var item in Model.Data)
+                                    {
+                                        <div class="row product-layout-list">
+                                            <div class="col-lg-3 col-md-5 ">
+                                                <div class="product-image">
+                                                    <a asp-action="Details" asp-controller="Home" asp-route-id="@item.Id">
+                                                        <img src="~/uploads/@(item.SubCategoryCredentials is object ? item.SubCategoryCredentials.OrderByDescending(a=>a.Id).FirstOrDefault().Src:"")" alt="Li's Product Image">
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-5 col-md-7">
-                                            <div class="product_desc">
-                                                <div class="product_desc_info">
-                                                    <div class="product-review">
-                                                        <h5 class="manufacturer">
-                                                            <a href="product-details.html">Graphic Corner</a>
-                                                        </h5>
-                                                        <div class="rating-box">
-                                                            <ul class="rating">
-                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                            </ul>
+                                            <div class="col-lg-5 col-md-7">
+                                                <div class="product_desc">
+                                                    <div class="product_desc_info">
+                                                        <div class="product-review">
+                                                            <h5 class="manufacturer">
+                                                                <a asp-action="Index" asp-controller="Shop">@item.Category.Name</a>
+                                                            </h5>
                                                         </div>
+                                                        <h4><a class="product_name" asp-action="Details" asp-controller="Home" asp-route-id="@item.Id">@item.Name</a></h4>
+                                                        <div class="price-box">
+                                                            <span class="new-price">$ @item.Price</span>
+                                                        </div>
+                                                        <p>@Html.Raw(item.Desc)</p>
                                                     </div>
-                                                    <h4><a class="product_name" href="single-product.html">Hummingbird printed t-shirt</a></h4>
-                                                    <div class="price-box">
-                                                        <span class="new-price">$46.80</span>
-                                                    </div>
-                                                    <p>Beach Camera Exclusive Bundle - Includes Two Samsung Radiant 360 R3 Wi-Fi Bluetooth Speakers. Fill The Entire Room With Exquisite Sound via Ring Radiator Technology. Stream And Control R3 Speakers Wirelessly With Your Smartphone. Sophisticated, Modern Desig</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="shop-add-action mb-xs-30">
+                                                    <ul class="add-actions-link">
+                                                        <li class="add-cart"><a href="#" data-id="@item.Id">Add to cart</a></li>
+                                                        <li class="add-wishlist"><a href="#" data-id="@item.Id"><i class="fa fa-heart-o"></i>Add to wishlist</a></li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <div class="shop-add-action mb-xs-30">
-                                                <ul class="add-actions-link">
-                                                    <li class="add-cart"><a href="#">Add to cart</a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a></li>
-                                                    <li><a class="quick-view" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-eye"></i>Quick view</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                    }
                                 </div>
+                                 
+                                }
+
                             </div>
                         </div>
                         <div class="paginatoin-area">
@@ -167,14 +177,14 @@
                                 <div class="col-lg-6 col-md-6">
                                     <ul class="pagination-box">
                                         <li>
-                                            <a asp-action="Index" asp-controller="Shop" asp-route-page=0 class="Previous"><i class="fa fa-chevron-left"></i>First</a>
+                                            <a asp-action="Index" asp-controller="Shop" asp-route-page=0 class="Previous"><i class="fa fa-chevron-left"></i></a>
                                         </li>
                                         @for (int i = Model.Pagination.StartPage; i <= Model.Pagination.EndPage; i++)
                                         {
                                             <li class="@(Model.Pagination.Page == i ? "active": "")"><a asp-action="Index" asp-controller="Shop" asp-route-page=@i>@(i + 1)</a></li>
                                         }
                                         <li>
-                                            <a asp-action="Index" asp-controller="Shop" asp-route-page=@(Model.Pagination.PageCount-1) class="Next">Last<i class="fa fa-chevron-right"></i></a>
+                                            <a asp-action="Index" asp-controller="Shop" asp-route-page=@(Model.Pagination.PageCount-1) class="Next"><i class="fa fa-chevron-right"></i></a>
                                         </li>
                                     </ul>
                                 </div>

@@ -51,6 +51,7 @@ namespace AgeaProject.Controllers
             SubCategory prod = _db.SubCategories.Where(a => a.Id == id).Include(a => a.SubCategoryCredentials).Include(a=>a.Category).FirstOrDefault();
             List<SubCategory> subCategories = _db.SubCategories
                 .Where(a => a.CategoryId == (prod is object ? prod.CategoryId : 0) && a.Id != (prod is object ? prod.Id : 0))
+                .Include(a=>a.SubCategoryCredentials)
                 .ToList()
                 .TakeSafe(10)
                 .ToList();
@@ -90,6 +91,16 @@ namespace AgeaProject.Controllers
                                       join b in keys on a.Id equals int.Parse(b)
                                       select a).ToList();
             return Json(data);
+        }
+        public IActionResult Search([FromQuery] string categoryKey)
+        {
+            Category category = _db.Categories.Where(a => a.Name.Contains(categoryKey)).FirstOrDefault();
+            if (category is object)
+            {
+                return RedirectToAction(nameof(Index),"Products",new { categoryId = category.Id});
+            }
+            TempData["Fail-Search"] = "There is no anything in such category key !";
+            return RedirectToAction(nameof(Index));
         }
 
     }

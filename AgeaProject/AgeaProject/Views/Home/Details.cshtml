@@ -12,6 +12,15 @@
 </div>
 <!-- Li's Breadcrumb Area End Here -->
 <!-- content-wraper start -->
+<style>
+    .drift-zoom-pane.drift-inline {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border-radius:50%;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    }
+</style>
 <div class="content-wraper">
     <div class="container">
         <div class="row single-product-area">
@@ -21,15 +30,18 @@
                     <div class="product-details-images slider-navigation-1">
                         @foreach (var item in Model.Product is object ? Model.Product.SubCategoryCredentials.OrderByDescending(a => a.Id).AsEnumerable() : new List<SubCategoryCredential>())
                         {
-                            <div class="lg-image">
-                                <img src="~/uploads/@item.Src" alt="product image">
+                            <div class="lg-image" data-id="data">
+                                <img class="enlarge@(item.Id)" data-zoom="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" alt="product image">
+                                <div class="box@(item.Id)"></div>
                             </div>
                         }
                     </div>
                     <div class="product-details-thumbs slider-thumbs-1">
                         @foreach (var item in Model.Product is object ? Model.Product.SubCategoryCredentials.OrderByDescending(a => a.Id).AsEnumerable() : new List<SubCategoryCredential>())
                         {
-                            <div class="sm-image"><img src="~/uploads/@item.Src" alt="product image thumb"></div>
+                            <div class="sm-image">
+                                <img data-product-image data-zoom="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" alt="product image thumb">
+                            </div>
                         }
                     </div>
                 </div>
@@ -227,7 +239,6 @@
                                                 <div class="add-actions">
                                                     <ul class="add-actions-link">
                                                         <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                                        <li><a href="#" data-id="@item.Id" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                                         <li class="add-wishlist"><a data-id="@item.Id" class="links-details" href="#"><i class="fa fa-heart-o"></i></a></li>
                                                     </ul>
                                                 </div>
@@ -245,13 +256,61 @@
         </section>
     }
 
-}
-@section Scripts{
-    <script>
-        ClickCartInit();    
+        }
+        @section Scripts{
+            <script>
+                (function () {
+                    var images = $('.lg-image')
+                    
+                    for (var i = 0; i < images.length; i++) {
+                        console.log(images[i].childNodes[3])
+                        //var paneContainer = $(images[i])
+                        //new Drift(document.querySelector(`.${images[i].childNodes[1].className}`));
+                        new Drift(document.querySelector(`.${images[i].childNodes[1].className}`), {
+                            //paneContainer: document.querySelector(`.${images[i].childNodes[3].className}`),
+                            zoomFactor: 2,
+                            inlinePane: true
+                        });
+                    }
+                })()
+               
+                ClickCartInit();
+                ClickCartInitWishList();
+                function ClickCartInitWishList() {
+                    $('.add-wishlist a').click(function (e) {
+                        e.preventDefault()
+                        var id = $(this).attr('data-id');
+                        var count = 0;
+                        var items = localStorage.getItem('wishlist')
+                        if (items) {
+                            var keys = items.split(',')
+                            if (!keys.includes(id)) {
+                                items += ',';
+                                items += id;
+                                count = keys.length;
+                                localStorage.setItem('wishlist', items);
+                                $('.wishlist-item-count').text(count + 1);
+                                Swal.fire('Added to Wishlist!');
+                            }
+                            else {
+                                Swal.fire('Item is already in Wishlist!')
+                            }
+                        }
+                        else {
+                            count += 1;
+                            $('.wishlist-item-count').text(count);
+                            localStorage.setItem('wishlist', id);
+                            Swal.fire('Added to Wishlist!');
+                        }
+                    })
+                }
+
             function ClickCartInit() {
                 $('.add-cart').click(function (e) {
-                e.preventDefault()
+                    e.preventDefault()
+                    Swal.fire(
+                        'Added to Cart!'
+                    )
                 var id = $(this).attr('data-id');
                 $.get("@Url.Action("GetShopItem","Home")/" + id, function (data) {
                     console.log(data)
@@ -396,5 +455,5 @@
             return newArray;
 
         }
-    </script>
-}
+            </script>
+        }
