@@ -1,0 +1,88 @@
+﻿using AgeaProject.Areas.Admin.Helpers;
+using AgeaProject.Areas.Admin.ViewModels;
+using AgeaProject.Areas.Admin.ViewModels.Blog;
+using AgeaProject.Data;
+using AgeaProject.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace AgeaProject.Areas.Admin.Controllers
+{
+    [Area("Admin")]
+    public class BlogController : Controller
+    {
+        private readonly DataContext _db;
+        public BlogController(DataContext db)
+        {
+            _db = db;
+        }
+        // GET: BlogController
+        public ActionResult Index([FromQuery] int page = 0)
+        {
+            BlogListViewModel model = new BlogListViewModel();
+            List<Blog> blogs = _db.Blogs.OrderByDescending(m=>m.Id).ToList();
+            float pagecount = blogs.Count;
+            int count = (int)Math.Ceiling(pagecount / 10);
+
+            model.Pagination = ExConverter.PaginationMethod(page, count);
+            model.Blogs = blogs.Skip(page * 10).Take(10).ToList();
+
+            return View(model);
+        }
+
+        // GET: BlogController/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: BlogController/Create
+        [HttpPost]
+        public ActionResult Create([FromForm] CreateBlogViewModel request)
+        {
+            string fileSrc = FileManager.IFormSaveLocal(request.Image, "blogs");
+            _db.Blogs.Add(new Blog { Title = request.Title, Text = request.Text,CreatedDate = DateTime.Now, Image = fileSrc });
+            _db.SaveChanges();
+            TempData["Success-Blog"] = "Blog Added Successfully";
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: BlogController/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: BlogController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // POST: BlogController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            Blog blog = _db.Blogs.FirstOrDefault(a => a.Id == id);
+            if (blog is object)
+            {
+                _db.Blogs.Remove(blog);
+                _db.SaveChanges();
+                TempData["Success-Category"] = "Blog Deleted Successfully";
+            }
+            return RedirectToAction(nameof(Index));
+        }
+    }
+}

@@ -1,0 +1,75 @@
+﻿@model AgeaProject.Areas.Admin.ViewModels.Blog.BlogListViewModel
+<div class="row">
+    <div class="col-12">
+        <h3>Categories</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3"><a asp-action="Create" asp-controller="Blog" asp-area="Admin" class="btn btn-primary">Add Blog</a></div>
+</div>
+<div class="row justify-content-center mt-3">
+    <div class="col-12">
+        <table class="table table-bordered text-center">
+            <thead style="background-color: #e74a3b;color:white;">
+                <tr class="text-center">
+                    <th scope="col">Title</th>
+                    <th scope="col">Text</th>
+                    <th scope="col">Picture</th>
+                    <th scope="col"></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Blogs is object)
+                {
+                    @foreach (var item in Model.Blogs)
+                    {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@Html.Raw(item.Text)
+                    </td>
+                    <td><img width="60" height="60" src="~/uploads/@item.Image" /></td>
+                    <td>
+                        <a asp-action="Delete" asp-controller="Blog" asp-area="Admin" asp-route-id="@item.Id">Remove</a>
+                        |
+                        <a asp-action="Update" asp-controller="Blog" asp-area="Admin" asp-route-id="@item.Id">Update</a>
+                    </td>
+                </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item @(Model.Pagination.Page == 0 ? "disabled": "")">
+                    <a class="page-link" asp-route-page=0 tabindex="-1">First Page</a>
+                </li>
+                @for (int i = Model.Pagination.StartPage; i <= Model.Pagination.EndPage; i++)
+                {
+                    <li class="page-item @(Model.Pagination.Page == i ? "active": "")">
+                        <a class="page-link" asp-action="Index" asp-controller="Blog" asp-area="Admin" asp-route-page=@i>@(i + 1)<span class="sr-only">(current)</span></a>
+                    </li>
+                }
+                <li class="page-item  @(Model.Pagination.Page == Model.Pagination.PageCount - 1 ? "disabled": "")">
+                    <a class="page-link" asp-action="Index" asp-controller="Blog" asp-area="Admin" asp-route-page=@(Model.Pagination.PageCount-1)>Last Page</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+@section Scripts{
+    @if (TempData["Success-Category"] is object)
+    {
+        <input type="hidden" id="Success-Category" value="@TempData["Success-Category"]" />
+        <script>
+            Swal.fire(
+                'Success !',
+                $('#Success-Category').val(),
+                'success'
+            )
+        </script>
+    }
+
+}
+
+

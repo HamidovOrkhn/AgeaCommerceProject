@@ -30,13 +30,13 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="li-blog-banner">
-                                            <a target="_blank" asp-controller="Blog" asp-action="Single" asp-route-id-="@item.Id"><img class="img-full" src="~/images/blog-banner/@item.Image" alt=""></a>
+                                            <a target="_blank"href="Blog/Single/@item.Id"><img class="img-full" src="~/uploads/@item.Image" alt=""></a>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="li-blog-content">
                                             <div class="li-blog-details">
-                                                <h3 class="li-blog-heading pt-xs-25 pt-sm-25"><a target="_blank" asp-controller="Blog" asp-action="Single" asp-route-id-="@item.Id">@item.Title</a></h3>
+                                                <h3 class="li-blog-heading pt-xs-25 pt-sm-25"><a href="Blog/Single/@item.Id">@item.Title</a></h3>
                                                 <div class="li-blog-meta">
                                                     <a class="author" href="#"><i class="fa fa-user"></i>Admin</a>
                                                     <a class="post-time" href="#"><i class="fa fa-calendar"></i> @item.CreatedDate.ToString("dd MMM yyyy")</a>
@@ -44,7 +44,7 @@
                                                 <p>
                                                     @Html.Raw(item.Text)
                                                 </p>
-                                                <a class="read-more" href="blog-details-left-sidebar.html">Read More...</a>
+                                                <a class="read-more" href="Blog/Single/@item.Id">Read More...</a>
                                             </div>
                                         </div>
                                     </div>
