@@ -37,12 +37,15 @@ namespace AgeaProject.Controllers
             List<SubCategory> dataMostSubCategory = _db.SubCategories.Include(a => a.Category).Include(a=>a.SubCategoryCredentials).ToList().TakeLastSafe(8).ToList();
             List<Category> dataMost = _db.Categories.ToList().TakeSafe(2).ToList();
             List<SliderAd> slider = _db.SliderAds.ToList();
+            List<Blog> blogs = _db.Blogs.OrderByDescending(m => m.Id).Take(9).ToList();
             model.SubCategoriesNew = datanNewSubCategory;
             model.CategoriesMost = dataMost;
             model.CategoriesNav = dataNav;
             model.CategoriesNew = dataNew;
             model.SliderMain = slider;
             model.SubCategoriesMost = dataMostSubCategory;
+            model.Blogs = blogs;
+
             return View(model);
         }
         public IActionResult Details(int id)

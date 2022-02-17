@@ -1,0 +1,51 @@
+﻿@model AgeaProject.Areas.Admin.ViewModels.Blog.UpdateBlogViewModel
+
+@{
+    ViewData["Title"] = "Update";
+}
+
+<h1>Update</h1>
+
+<h4>Blog</h4>
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-7 about-image-wrap">
+        <form asp-action="Update" asp-controller="Blog" asp-area="Admin" asp-route-id="@Model.Id" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" placeholder="Name" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Src" class="control-label"></label>
+                <input asp-for="Src" type="file" placeholder="Image" class="form-control" />
+                <span asp-validation-for="Src"class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <textarea id="bodyarticle" asp-for="Text" placeholder="Description" class="form-control"> </textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-5 mt-2">
+        <div class="text-center">
+            <img width="400" height="400" src="~/uploads/@Model.Image" class="rounded" alt="...">
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_AdminValidationPartial");}
+    <script>
+        CKEDITOR.replace("bodyarticle");
+    </script>
+}

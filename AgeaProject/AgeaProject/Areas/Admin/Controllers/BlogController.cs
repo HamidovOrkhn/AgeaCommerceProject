@@ -3,6 +3,7 @@ using AgeaProject.Areas.Admin.ViewModels;
 using AgeaProject.Areas.Admin.ViewModels.Blog;
 using AgeaProject.Data;
 using AgeaProject.Models;
+using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -52,24 +53,41 @@ namespace AgeaProject.Areas.Admin.Controllers
         }
 
         // GET: BlogController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Update(int id)
         {
-            return View();
+            UpdateBlogViewModel model = new UpdateBlogViewModel();
+            Blog blog = _db.Blogs.Where(a => a.Id == id).FirstOrDefault();
+            if (blog is object)
+            {
+                model = blog.Adapt<UpdateBlogViewModel>();
+                model.Image = blog.Image;
+            }
+            return View(model);
         }
 
         // POST: BlogController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Update([FromForm] UpdateBlogViewModel req, int id)
         {
-            try
+            Blog blog = _db.Blogs.Where(a => a.Id == id).FirstOrDefault();
+            if (blog is object)
             {
-                return RedirectToAction(nameof(Index));
+                #region Mapping
+                blog.Title = req.Title;
+                blog.Text = req.Text;
+                #endregion
+                string filename = blog.Image;
+                if (req.Src is object)
+                {
+                    string[] fileNameArr = filename.Split("/");
+                    FileManager.Delete(fileNameArr[1], fileNameArr[0]);
+                    filename = FileManager.IFormSaveLocal(req.Src, "blogs");
+                    blog.Image = filename;
+                }
+                TempData["Success-Category"] = "Blog Updated Successfully";
             }
-            catch
-            {
-                return View();
-            }
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: BlogController/Delete/5

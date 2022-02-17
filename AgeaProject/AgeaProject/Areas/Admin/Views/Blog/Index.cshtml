@@ -1,7 +1,7 @@
 ﻿@model AgeaProject.Areas.Admin.ViewModels.Blog.BlogListViewModel
 <div class="row">
     <div class="col-12">
-        <h3>Categories</h3>
+        <h3>Blogs</h3>
     </div>
 </div>
 <div class="row">
@@ -58,13 +58,13 @@
     </div>
 </div>
 @section Scripts{
-    @if (TempData["Success-Category"] is object)
+    @if (TempData["Success-Blog"] is object)
     {
-        <input type="hidden" id="Success-Category" value="@TempData["Success-Category"]" />
+        <input type="hidden" id="Success-Category" value="@TempData["Success-Blog"]" />
         <script>
             Swal.fire(
                 'Success !',
-                $('#Success-Category').val(),
+                $('#Success-Blog').val(),
                 'success'
             )
         </script>

@@ -15,7 +15,6 @@
     </div>
 </div>
 <!-- Li's Breadcrumb Area End Here -->
-
 <!-- Begin Li's Main Blog Page Area -->
 <div class="li-main-blog-page pt-60 pb-55">
     <div class="container">
@@ -29,8 +28,8 @@
                             <div class="li-blog-single-item pb-30">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div class="li-blog-banner">
-                                            <a target="_blank"href="Blog/Single/@item.Id"><img class="img-full" src="~/uploads/@item.Image" alt=""></a>
+                                        <div class="li-blog-banner" style="height:326px">
+                                            <a target="_blank" href="Blog/Single/@item.Id"><img style="object-fit:cover" class="img-full" src="~/uploads/@item.Image" alt=""></a>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -41,9 +40,19 @@
                                                     <a class="author" href="#"><i class="fa fa-user"></i>Admin</a>
                                                     <a class="post-time" href="#"><i class="fa fa-calendar"></i> @item.CreatedDate.ToString("dd MMM yyyy")</a>
                                                 </div>
-                                                <p>
-                                                    @Html.Raw(item.Text)
-                                                </p>
+                                                @if (item.Text.Length > 300)
+                                                {
+                                                    <p>
+                                                        @Html.Raw(item.Text.Substring(0, 300)) ...
+                                                    </p>
+                                                }
+                                                else
+                                                {
+                                                    <p>
+                                                        @Html.Raw(item.Text)
+                                                    </p>
+                                                }
+
                                                 <a class="read-more" href="Blog/Single/@item.Id">Read More...</a>
                                             </div>
                                         </div>

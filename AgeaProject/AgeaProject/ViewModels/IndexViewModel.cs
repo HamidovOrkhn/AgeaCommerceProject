@@ -15,5 +15,6 @@ namespace AgeaProject.ViewModels
         public List<Category> CategoriesMost { get; set; }
         public List<SliderAd> SliderMain { get; set; }
         public ContactUs ContactUs { get; set; }
+        public List<Blog> Blogs { get; set; }
     }
 }

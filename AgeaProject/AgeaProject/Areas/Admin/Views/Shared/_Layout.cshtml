@@ -37,7 +37,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand bg-white d-flex align-items-center justify-content-center" asp-action="Index" asp-controller="Home" asp-area="Admin">
                 <div class="sidebar-brand-icon">
-                    <img style="max-width:55px;" src="/assets/img/logo/zafaroglu_academy_logo.png" alt="AgeaFire" />
+                    <img style="max-width: 225px;" src="~/images/agea-logo.png" alt="AgeaFire" />
                 </div>
             </a>
 
@@ -47,13 +47,13 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
                 <a class="nav-link" asp-action="Index" asp-controller="Home" asp-area="Admin">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-chart-area"></i>
                     <span>Main Page</span>
                 </a>
             </li>
             <!-- Heading -->
             <div class="sidebar-heading">
-                Əsas Səhifələr
+                Pages
             </div>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -65,20 +65,20 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" asp-action="Index" asp-controller="Products" asp-area="Admin">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-money-bill-alt"></i>
                     <span>Products</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" asp-action="Index" asp-controller="Quotes" asp-area="Admin">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-table"></i>
                     <span>Quotes</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-folder"></i>
+                    <i class="fas fa-fw fa-wrench"></i>
                     <span>Site Settings</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -92,21 +92,6 @@
                     </div>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                   aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-folder"></i>
-                    <span>Users</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Parameters</h6>
-                        <a class="collapse-item" asp-action="Index" asp-controller="User" asp-area="Admin">User List</a>
-                        <a class="collapse-item" asp-action="Create" asp-controller="User" asp-area="Admin">Register</a>
-                    </div>
-                </div>
-            </li>
-
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>

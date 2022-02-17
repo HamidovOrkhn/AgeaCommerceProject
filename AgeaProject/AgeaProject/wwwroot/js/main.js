@@ -103,16 +103,16 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
 					items: 1
 			},
 			480: {
-					items: 2
+					items: 1
 			},
 			768: {
-					items: 3
+					items: 2
 			},
 			992: {
-					items: 4
+					items: 2
 			},
 			1200: {
-					items: 5
+					items: 3
 			}
 		}
 	});
