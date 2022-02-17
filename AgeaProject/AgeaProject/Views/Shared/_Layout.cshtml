@@ -52,6 +52,7 @@
         <!-- Begin Header Area -->
         <header>
             <!-- Header Top Area End Here -->
+            @await Component.InvokeAsync("ContactNav")
             <!-- Begin Header Middle Area -->
             <div class="header-middle pl-sm-0 pr-sm-0 pl-xs-0 pr-xs-0">
                 <div class="container">
@@ -420,8 +421,8 @@
                                                     </a>
                                                 </li>`;
                         price += data[i].price * existed.count
-                        unitCount += 1;
                     }
+                    unitCount = splited.length;
                     $('.hm-minicart .minicart-product-list').append(item);
                     $('.shop-price-icon').html(`$${price}<span class="cart-item-count">${unitCount}</span>`)
                     $('.shop-price-banner').text(`$${price}`)
@@ -630,9 +631,11 @@
                 var newkeys = arrayRemove(keys, id);
 
                 var newString = "";
+                var counter = 0;
                 for (var i = 0; i < newkeys.length; i++) {
                     newString += newkeys[i];
-                    newString+=","
+                    newString += ","
+                    counter +=1;
                 }
                 console.log(newString)
                 if (newString.length == 0) {
@@ -647,7 +650,7 @@
                 var priceLocal = parseFloat(localStorage.getItem("shoping-keys-price"));
                 var countLocal = parseInt(localStorage.getItem("shoping-keys-count"));
                 var newPrice = priceLocal - (price * count);
-                var newCount = countLocal - 1;
+                var newCount = counter;
                 $('.shop-price-icon').html(`$${newPrice}<span class="cart-item-count">${newCount}</span>`)
                 $('.shop-price-banner').text(`$${newPrice}`)
                 $('.total-price-shop').text(`$${newPrice}`)
