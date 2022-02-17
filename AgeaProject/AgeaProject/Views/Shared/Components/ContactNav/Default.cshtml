@@ -1,0 +1,34 @@
+﻿@model ContactUs
+    <div class="header-top">
+        <div class="container">
+            <div class="row">
+                <!-- Begin Header Top Left Area -->
+                <div class="col-lg-3 col-md-4">
+                    <div class="header-top-left">
+                        <ul class="phone-wrap">
+                            <li><span>Telephone Enquiry:</span><a href="#">@Model.Phone</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Header Top Left Area End Here -->
+                <!-- Begin Header Top Right Area -->
+                <div class="col-lg-9 col-md-8">
+                    <div class="header-top-right">
+                        <ul class="ht-menu">
+                            <!-- Begin Setting Area -->
+                            <li>
+                                <span class="language-selector-wrapper">Address :@Model.Address</span>
+                            </li>
+                            <!-- Setting Area End Here -->
+                            <!-- Begin Currency Area -->
+                            <li>
+                                <span class="currency-selector-wrapper">Email :@Model.Email</span>
+                            </li>
+                            <!-- Currency Area End Here -->
+                        </ul>
+                    </div>
+                </div>
+                <!-- Header Top Right Area End Here -->
+            </div>
+        </div>
+    </div>
