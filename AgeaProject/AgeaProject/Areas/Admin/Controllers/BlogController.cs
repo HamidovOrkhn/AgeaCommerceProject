@@ -2,6 +2,7 @@
 using AgeaProject.Areas.Admin.ViewModels;
 using AgeaProject.Areas.Admin.ViewModels.Blog;
 using AgeaProject.Data;
+using AgeaProject.Filter;
 using AgeaProject.Models;
 using Mapster;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 namespace AgeaProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[Login]
     public class BlogController : Controller
     {
         private readonly DataContext _db;

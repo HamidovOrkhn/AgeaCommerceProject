@@ -1,6 +1,7 @@
 ﻿using AgeaProject.Areas.Admin.Helpers;
 using AgeaProject.Areas.Admin.ViewModels.Quotes;
 using AgeaProject.Data;
+using AgeaProject.Filter;
 using AgeaProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace AgeaProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[Login]
     public class QuotesController : Controller
     {
         private readonly DataContext _db;

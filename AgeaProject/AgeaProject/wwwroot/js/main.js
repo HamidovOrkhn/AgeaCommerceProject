@@ -138,10 +138,10 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
 					items: 2
 			},
 			992: {
-					items: 3
+					items: 5
 			},
 			1200: {
-					items: 4
+					items: 5
 			}
 		}
 	});

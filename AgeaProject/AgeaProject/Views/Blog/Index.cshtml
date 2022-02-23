@@ -1,4 +1,4 @@
-﻿@model List<Blog>
+﻿@model BlogViewModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -22,7 +22,7 @@
             <!-- Begin Li's Main Content Area -->
             <div class="col-lg-12">
                 <div class="row li-main-content">
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Blogs)
                     {
                         <div class="col-lg-12">
                             <div class="li-blog-single-item pb-30">
@@ -63,15 +63,23 @@
                     }
                     <!-- Begin Li's Pagination Area -->
                     <div class="col-lg-12">
-                        <div class="li-paginatoin-area text-center pt-25">
+                        <div class="paginatoin-area">
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <ul class="li-pagination-box">
-                                        <li><a class="Previous" href="#">Previous</a></li>
-                                        <li class="active"><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a class="Next" href="#">Next</a></li>
+                                <div class="col-lg-6 col-md-6">
+                                    <p>Showing @((Model.Pagination.Page * Model.Pagination.CountInPage) > 0 ? (Model.Pagination.Page * Model.Pagination.CountInPage):1)-@(Model.Pagination.CountInPage * (Model.Pagination.Page +1) > Model.Pagination.Count? Model.Pagination.Count: Model.Pagination.CountInPage) of @Model.Pagination.Count item(s)</p>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <ul class="pagination-box">
+                                        <li>
+                                            <a asp-action="Index" asp-controller="Blog" asp-route-page=0 class="Previous"><i class="fa fa-chevron-left"></i></a>
+                                        </li>
+                                        @for (int i = Model.Pagination.StartPage; i <= Model.Pagination.EndPage; i++)
+                                        {
+                                            <li class="@(Model.Pagination.Page == i ? "active": "")"><a asp-action="Index" asp-controller="Blog" asp-route-page=@i>@(i + 1)</a></li>
+                                        }
+                                        <li>
+                                            <a asp-action="Index" asp-controller="Blog" asp-route-page=@(Model.Pagination.PageCount-1) class="Next"><i class="fa fa-chevron-right"></i></a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

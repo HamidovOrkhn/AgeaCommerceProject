@@ -3,6 +3,7 @@ using AgeaProject.Areas.Admin.ViewModels;
 using AgeaProject.Areas.Admin.ViewModels.Contact;
 using AgeaProject.Areas.Admin.ViewModels.Settings;
 using AgeaProject.Data;
+using AgeaProject.Filter;
 using AgeaProject.Models;
 using AgeaProject.ViewModels;
 using Mapster;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 namespace AgeaProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+   // [Login]
     public class SettingsController : Controller
     {
         private readonly DataContext _db;

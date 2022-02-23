@@ -28,6 +28,7 @@ namespace AgeaProject
             services.AddControllers().AddNewtonsoftJson(x =>x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddDbContext<DataContext>(a => a.UseMySQL(nameof(DataContext)));
             services.AddRouting(options => options.LowercaseUrls = true);
+            services.AddSession();
             services.AddMvc(setup => { }).AddFluentValidation(options =>
             {
                 options.RegisterValidatorsFromAssemblyContaining<Startup>();
@@ -48,6 +49,8 @@ namespace AgeaProject
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 

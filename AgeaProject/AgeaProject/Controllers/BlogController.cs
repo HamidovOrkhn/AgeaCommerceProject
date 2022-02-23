@@ -1,5 +1,7 @@
-﻿using AgeaProject.Data;
+﻿using AgeaProject.Areas.Admin.Helpers;
+using AgeaProject.Data;
 using AgeaProject.Models;
+using AgeaProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,11 +18,18 @@ namespace AgeaProject.Controllers
         {
             _db = db;
         }
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] int page = 0)
         {
-            List<Blog> blog = _db.Blogs.OrderByDescending(m=>m.Id)
-                .Take(9).ToList();
-            return View(blog);
+            BlogViewModel model = new BlogViewModel();
+            List<Blog> blog = _db.Blogs.OrderByDescending(m => m.Id)
+                 .ToList();
+            float pagecount = blog.Count;
+            int count = (int)Math.Ceiling(pagecount / 9);
+            model.Pagination = ExConverter.PaginationAdvancedMethod(page, count);
+            model.Pagination.Count = blog.Count;
+            model.Pagination.CountInPage = 9;
+            model.Blogs = blog.Skip(page * 9).Take(9).ToList();
+            return View(model);
         }
         public IActionResult Single(int id)
         

@@ -1,6 +1,7 @@
 ﻿using AgeaProject.Areas.Admin.Helpers;
 using AgeaProject.Areas.Admin.ViewModels.About_us;
 using AgeaProject.Data;
+using AgeaProject.Filter;
 using AgeaProject.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace AgeaProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[Login]
     public class AboutUsController : Controller
     {
         private readonly DataContext _db;
