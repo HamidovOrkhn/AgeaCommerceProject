@@ -33,7 +33,7 @@ namespace AgeaProject.Controllers
             model.Pagination = ExConverter.PaginationAdvancedMethod(page, count);
             model.Pagination.Count = data.Count;
             model.Pagination.CountInPage = 12;
-            model.Data = data.Skip(page * 12).Take(9).ToList();
+            model.Data = data.Skip(page * 12).Take(12).ToList();
             model.Categories = categories;
             return View(model);
         }
