@@ -32,10 +32,10 @@ namespace AgeaProject.Controllers
                 .TakeLastSafe(2)
                 .ToList();
             List<Category> dataNav = _db.Categories.Include(a => a.SubCategory).AsEnumerable().Select(a => new Category { Id = a.Id, Name = a.Name, SubCategory = a.SubCategory.TakeLastSafe(10), Src = a.Src }).ToList();
-            List<Category> dataNew = _db.Categories.ToList().TakeLastSafe(2).ToList();
+            List<Category> dataNew = _db.Categories.ToList().TakeLastSafe(3).ToList();
             List<SubCategory> datanNewSubCategory = _db.SubCategories.Include(a=>a.Category).ToList().TakeSafe(8).ToList();
             List<SubCategory> dataMostSubCategory = _db.SubCategories.Include(a => a.Category).Include(a=>a.SubCategoryCredentials).ToList().TakeLastSafe(8).ToList();
-            List<Category> dataMost = _db.Categories.ToList().TakeSafe(2).ToList();
+            List<Category> dataMost = _db.Categories.ToList().TakeSafe(3).ToList();
             List<SliderAd> slider = _db.SliderAds.ToList();
             List<Blog> blogs = _db.Blogs.OrderByDescending(m => m.Id).Take(9).ToList();
             model.SubCategoriesNew = datanNewSubCategory;

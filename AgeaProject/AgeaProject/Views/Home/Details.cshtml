@@ -17,7 +17,7 @@
         position: absolute;
         width: 200px;
         height: 200px;
-        border-radius:50%;
+        border-radius: 50%;
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
     }
 </style>
@@ -39,7 +39,7 @@
                         @foreach (var item in Model.Product is object ? Model.Product.SubCategoryCredentials.OrderByDescending(a => a.Id).AsEnumerable() : new List<SubCategoryCredential>())
                         {
                             <div class="sm-image">
-                                <img width="250" height="110" data-product-image data-zoom="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" alt="product image thumb">
+                                <img width="250" class="post-img" height="110" data-product-image data-zoom="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/@item.Src" alt="product image thumb">
                             </div>
                         }
                     </div>
@@ -50,7 +50,7 @@
             <div class="col-lg-7 col-md-6">
                 <div class="product-details-view-content sp-normal-content pt-60">
                     <div class="product-info">
-                        <h2>@(Model.Product is object ? Model.Product.Name : "")</h2>
+                        <h2 class="post-title">@(Model.Product is object ? Model.Product.Name : "")</h2>
                         <h4">@(Model.Product is object ? Model.Product.SKU : "")</h4">
                         <br />
                         <span class="product-details-ref">@(Model.Product is object ? Model.Product.Category.Name : "")</span>
@@ -104,13 +104,14 @@
                                 <button class="add-to-cart add-cart" data-id="@(Model.Product is object ? Model.Product.Id : 0)" type="submit">Add to cart</button>
                             </form>
                         </div>
-                        <div class="product-additional-info">
+                        <div class="product-additional-info mb-3">
                             <div class="product-social-sharing">
                                 <ul>
-                                    <li class="facebook"><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
-                                    <li class="twitter"><a href="#"><i class="fa fa-twitter"></i>Twitter</a></li>
-                                    <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i>Google +</a></li>
-                                    <li class="instagram"><a href="#"><i class="fa fa-instagram"></i>Instagram</a></li>
+                                    <li class="facebook"><a style="cursor: pointer; color: white"><i class="fa fa-facebook"></i>Facebook</a></li>
+                                    <li class="twitter"><a style="cursor: pointer;color:white"><i class="fa fa-twitter"></i>Twitter</a></li>
+                                    <li class="pinterest" style="background-color:firebrick;"><a style="cursor: pointer; color: white"><i class="fa fa-pinterest"></i>Pinterest</a></li>
+                                    <li class="linkedin" style="background-color:dodgerblue"><a style="cursor: pointer; color: white"><i class="fa fa-linkedin"></i>Linkedin</a></li>
+                                    <li class="whatsapp" style="background-color:forestgreen"><a style="cursor: pointer; color: white"><i class="fa fa-whatsapp"></i>Whatsapp</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -255,22 +256,64 @@
         </section>
     }
 
+}
+@section Scripts{
+    <script>
+        (function () {
+            var images = $('.lg-image')
+
+            for (var i = 0; i < images.length; i++) {
+                console.log(images[i].childNodes[3])
+                //var paneContainer = $(images[i])
+                //new Drift(document.querySelector(`.${images[i].childNodes[1].className}`));
+                new Drift(document.querySelector(`.${images[i].childNodes[1].className}`), {
+                    //paneContainer: document.querySelector(`.${images[i].childNodes[3].className}`),
+                    zoomFactor: 2,
+                    inlinePane: true
+                });
+            }
+        })()
+    </script>
+    <script>
+        const facebookBtn = document.querySelector(".facebook");
+        const twitterBtn = document.querySelector(".twitter");
+        const pinterestBtn = document.querySelector(".pinterest");
+        const linkedinBtn = document.querySelector(".linkedin");
+        const whatsappBtn = document.querySelector(".whatsapp");
+
+        function init() {
+            const pinterestImg = document.querySelector(".post-img");
+
+            let postUrl = encodeURI(document.location.href);
+            let postTitle = encodeURI($(".post-title").text());
+            let postImg = encodeURI(pinterestImg.src);
+
+            facebookBtn.setAttribute(
+                "href",
+                `https://www.facebook.com/sharer.php?u=${postUrl}`
+            );
+
+            twitterBtn.setAttribute(
+                "href",
+                `https://twitter.com/share?url=${postUrl}&text=${postTitle}`
+            );
+
+            pinterestBtn.setAttribute(
+                "href",
+                `https://pinterest.com/pin/create/bookmarklet/?media=${postImg}&url=${postUrl}&description=${postTitle}`
+            );
+
+            linkedinBtn.setAttribute(
+                "href",
+                `https://www.linkedin.com/shareArticle?url=${postUrl}&title=${postTitle}`
+            );
+
+            whatsappBtn.setAttribute(
+                "href",
+                `https://wa.me/?text=${postTitle} ${postUrl}`
+            );
         }
-        @section Scripts{
-            <script>
-                (function () {
-                    var images = $('.lg-image')
-                    
-                    for (var i = 0; i < images.length; i++) {
-                        console.log(images[i].childNodes[3])
-                        //var paneContainer = $(images[i])
-                        //new Drift(document.querySelector(`.${images[i].childNodes[1].className}`));
-                        new Drift(document.querySelector(`.${images[i].childNodes[1].className}`), {
-                            //paneContainer: document.querySelector(`.${images[i].childNodes[3].className}`),
-                            zoomFactor: 2,
-                            inlinePane: true
-                        });
-                    }
-                })()
-            </script>
-        }
+
+        init();
+    </script>
+}
