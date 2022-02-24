@@ -46,15 +46,14 @@ namespace AgeaProject.Areas.Admin.Controllers
         }
 
         // GET: AboutUsController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Update(int id)
         {
             return View();
         }
 
         // POST: AboutUsController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Update(int id, IFormCollection collection)
         {
             try
             {
@@ -65,11 +64,7 @@ namespace AgeaProject.Areas.Admin.Controllers
                 return View();
             }
         }
-
-        // POST: AboutUsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
+        public ActionResult Remove(int id)
         {
 
             AboutUs data = _db.AboutUs.Find(id);

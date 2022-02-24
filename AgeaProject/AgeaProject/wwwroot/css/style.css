@@ -2890,6 +2890,12 @@ textarea:focus {
 .social-link > li:hover > a {
 	background: #fed700 ;
 }
+.social-link-details > li {
+	transition: all 0.3s ease-in-out;
+}
+.social-link-details > li:hover > a {
+	background: #fed700;
+}
 /*Social Link Color Variations*/
 .twitter {
 	background: #40c1df;
@@ -5084,9 +5090,9 @@ span.required {
 		margin-bottom: 15px;
 	}
 }
-.product-social-sharing > ul > li:hover {
+/*.product-social-sharing > ul > li:hover {
 	background: #fed700;
-}
+}*/
 .product-social-sharing > ul > li > a {
 	color: #ffffff;
 	font-size: 12px;

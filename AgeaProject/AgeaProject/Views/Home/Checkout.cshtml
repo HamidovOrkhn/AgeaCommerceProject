@@ -93,13 +93,13 @@
                                         <div class="card-header" id="#payment-1">
                                             <h5 class="panel-title">
                                                 <a class="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    Direct Bank Transfer.
+                                                    Information Purposes.
                                                 </a>
                                             </h5>
                                         </div>
                                         <div id="collapseOne" class="collapse show" data-parent="#accordion">
                                             <div class="card-body">
-                                                <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                                <p>When you request a quote, your information send to customer services. They will contact with you and give additional information about chosen products. Product price and Product quantity is just for additional information</p>
                                             </div>
                                         </div>
                                     </div>
@@ -134,6 +134,7 @@
                 data: JSON.stringify(keys),
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
+                    console.log(data)
                     var item = "";
                     var productInfo = ""
                     for (var i = 0; i < data.length; i++) {
@@ -146,7 +147,7 @@
                                     </tr>`;
                         price += data[i].price * existed.count
                         unitCount += 1;
-                        productInfo += `Product name: ${data[i].name}, Quantity: ${existed.count} `;
+                        productInfo += `Product name: ${data[i].name}, Quantity: ${existed.count}, Category: ${data[i].category.name} `;
                     }
                     var price = parseFloat(localStorage.getItem("shoping-keys-price"))
                     $(".total-price-payment").text(`$${price}`)

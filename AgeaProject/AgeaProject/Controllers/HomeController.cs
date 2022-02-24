@@ -1,4 +1,5 @@
-﻿using AgeaProject.Data;
+﻿using AgeaProject.Areas.Admin.Helpers;
+using AgeaProject.Data;
 using AgeaProject.Extensions;
 using AgeaProject.Models;
 using AgeaProject.ViewModels;
@@ -33,8 +34,8 @@ namespace AgeaProject.Controllers
                 .ToList();
             List<Category> dataNav = _db.Categories.Include(a => a.SubCategory).AsEnumerable().Select(a => new Category { Id = a.Id, Name = a.Name, SubCategory = a.SubCategory.TakeLastSafe(10), Src = a.Src }).ToList();
             List<Category> dataNew = _db.Categories.ToList().TakeLastSafe(3).ToList();
-            List<SubCategory> datanNewSubCategory = _db.SubCategories.Include(a=>a.Category).ToList().TakeSafe(8).ToList();
-            List<SubCategory> dataMostSubCategory = _db.SubCategories.Include(a => a.Category).Include(a=>a.SubCategoryCredentials).ToList().TakeLastSafe(8).ToList();
+            List<SubCategory> datanNewSubCategory = _db.SubCategories.Include(a => a.Category).ToList().TakeSafe(8).ToList();
+            List<SubCategory> dataMostSubCategory = _db.SubCategories.Include(a => a.Category).Include(a => a.SubCategoryCredentials).ToList().TakeLastSafe(8).ToList();
             List<Category> dataMost = _db.Categories.ToList().TakeSafe(3).ToList();
             List<SliderAd> slider = _db.SliderAds.ToList();
             List<Blog> blogs = _db.Blogs.OrderByDescending(m => m.Id).Take(9).ToList();
@@ -51,10 +52,10 @@ namespace AgeaProject.Controllers
         public IActionResult Details(int id)
         {
             DetailsViewModel model = new DetailsViewModel();
-            SubCategory prod = _db.SubCategories.Where(a => a.Id == id).Include(a => a.SubCategoryCredentials).Include(a=>a.Category).FirstOrDefault();
+            SubCategory prod = _db.SubCategories.Where(a => a.Id == id).Include(a => a.SubCategoryCredentials).Include(a => a.Category).FirstOrDefault();
             List<SubCategory> subCategories = _db.SubCategories
                 .Where(a => a.CategoryId == (prod is object ? prod.CategoryId : 0) && a.Id != (prod is object ? prod.Id : 0))
-                .Include(a=>a.SubCategoryCredentials)
+                .Include(a => a.SubCategoryCredentials)
                 .ToList()
                 .TakeSafe(10)
                 .ToList();
@@ -64,7 +65,7 @@ namespace AgeaProject.Controllers
         }
         public IActionResult GetShopItem(int id)
         {
-            return Json(_db.SubCategories.Where(a=>a.Id == id).Include(a => a.SubCategoryCredentials).FirstOrDefault());
+            return Json(_db.SubCategories.Where(a => a.Id == id).Include(a => a.SubCategoryCredentials).FirstOrDefault());
         }
         public IActionResult ShoppingCard()
         {
@@ -79,18 +80,31 @@ namespace AgeaProject.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Checkout(RequestProduct request)
+        public async Task<IActionResult> Checkout(RequestProduct request)
         {
             Quotes quote = request.Adapt<Quotes>();
             _db.Quotes.Add(quote);
-            _db.SaveChanges();
-            TempData["Success-Quote"] = "Your order sended to the Customer. They will pick you order as soon as they can !";
+            string bodyString = $"Name : {request.Name} <br>" +
+                                $"Surname : {request.Surname} <br>" +
+                                $"PhoneNumber : {request.Phone} <br>" +
+                                $"Order Details : {request.OrderDetails} <br>" +
+                                $"Description : {request.Desc} <br>";
+            try
+            {
+                await MailService.SendEmailAsync(new MailRequest { Body = bodyString, Subject = "AgeaFire Order Request", ToEmail = request.Email });
+                _db.SaveChanges();
+                TempData["Success-Quote"] = "Your order sended to the Customer. They will pick you order as soon as they can !";
+            }
+            catch (Exception x)
+            {
+                TempData["Error-Quote"] = x.Message;
+            }
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
-        public IActionResult GetShop([FromBody]List<string> keys)
+        public IActionResult GetShop([FromBody] List<string> keys)
         {
-            List<SubCategory> data = (from a in _db.SubCategories.Include(a => a.SubCategoryCredentials).ToList()
+            List<SubCategory> data = (from a in _db.SubCategories.Include(a => a.Category).Include(a => a.SubCategoryCredentials).ToList()
                                       join b in keys on a.Id equals int.Parse(b)
                                       select a).ToList();
             return Json(data);
@@ -100,7 +114,7 @@ namespace AgeaProject.Controllers
             Category category = _db.Categories.Where(a => a.Name.Contains(categoryKey)).FirstOrDefault();
             if (category is object)
             {
-                return RedirectToAction(nameof(Index),"Products",new { categoryId = category.Id});
+                return RedirectToAction(nameof(Index), "Products", new { categoryId = category.Id });
             }
             TempData["Fail-Search"] = "There is no anything in such category key !";
             return RedirectToAction(nameof(Index));

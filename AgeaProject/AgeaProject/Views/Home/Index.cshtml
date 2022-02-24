@@ -30,16 +30,12 @@
 
                                             </ul>
                                         </li>
-                                        @*<li class="right-menu cat-mega-title">
-                                            <ul>
-                                            </ul>
-                                        </li>*@
-                                        <li class="right-menu cat-mega-title" >
+                                        <li class="right-menu cat-mega-title">
                                             <ul>
                                                 <img style="opacity:0.7" height="200" width="300" src="./uploads/@item.Src">
                                             </ul>
                                         </li>
-                                        
+
                                     </ul>
                                 </li>
                             }
@@ -143,9 +139,12 @@
                                                 </h5>
                                             </div>
                                             <h4><a class="product_name" asp-action="Details" asp-controller="Home" asp-route-id="@item.Id">@item.Name</a></h4>
-                                            <div class="price-box">
-                                                <span class="new-price">$ @item.Price</span>
-                                            </div>
+                                            @if (item.Price > 0)
+                                            {
+                                                <div class="price-box">
+                                                    <span class="new-price">$ @item.Price</span>
+                                                </div>
+                                            }
                                         </div>
                                         <div class="add-actions">
                                             <ul class="add-actions-link">
@@ -214,15 +213,18 @@
                                                 </h5>
                                             </div>
                                             <h4><a class="product_name" asp-action="Details" asp-controller="Home" asp-route-id="@item.Id">@item.Name</a></h4>
-                                            <div class="price-box">
-                                                <span class="new-price">$@item.Price</span>
-                                            </div>
+                                            @if (item.Price > 0)
+                                            {
+                                                <div class="price-box">
+                                                    <span class="new-price">$@item.Price</span>
+                                                </div>
+                                            }
                                         </div>
                                         <div class="add-actions">
                                             <ul class="add-actions-link">
                                                 <li class="add-cart active"><a href="#" data-id="@item.Id">Add to cart</a></li>
                                                 <li class="add-wishlist"><a class="links-details" data-id="@item.Id" href="#"><i class="fa fa-heart-o"></i></a></li>
-                                               
+
                                             </ul>
                                         </div>
                                     </div>
@@ -249,9 +251,9 @@
                 <!-- Begin Li's Static Home Content Area -->
                 <div class="li-static-home-content">
                     <h2>
-                        Markets We Serve - 
+                        Markets We Serve -
                     </h2>
-                    <h2>Agea has worked with a variety of clients in </h2>
+                    <h2>Agea has worked with clients in </h2>
                     <p class="schedule">
                         all types of
                         <span>industries.</span>
@@ -343,6 +345,18 @@
                 'Successful Process!',
                 $('#Success-Quote').val(),
                 'success'
+            )
+            localStorage.clear();
+        </script>
+    }
+    @if (TempData["Error-Quote"] is object)
+    {
+        <input type="hidden" id="Error-Quote" value="@TempData["Error-Quote"]" />
+        <script>
+            Swal.fire(
+                'Failed !',
+                $('#Error-Quote').val(),
+                'error'
             )
             localStorage.clear();
         </script>

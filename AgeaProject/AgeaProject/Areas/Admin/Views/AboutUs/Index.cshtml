@@ -30,9 +30,9 @@
                             <td style="width: 650px;">@Html.Raw(item.Text)</td>
                             <td><img width="60" height="60" src="~/uploads/@item.Image" /></td>
                             <td style="width: 149px;">
-                                <a asp-action="Remove" asp-controller="Categories" asp-area="Admin" asp-route-id="@item.Id">Remove</a>
+                                <a asp-action="Remove" asp-controller="AboutUs" asp-area="Admin" asp-route-id="@item.Id">Remove</a>
                                 |
-                                <a asp-action="Update" asp-controller="Categories" asp-area="Admin" asp-route-id="@item.Id">Update</a>
+                                <a asp-action="Update" asp-controller="AboutUs" asp-area="Admin" asp-route-id="@item.Id">Update</a>
                             </td>
                         </tr>
                     }
