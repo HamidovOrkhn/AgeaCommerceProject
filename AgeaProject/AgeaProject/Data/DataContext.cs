@@ -22,7 +22,17 @@ namespace AgeaProject.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("appsettings.json").Build();
+            var configName = string.Empty;
+
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                configName = "appsettings.Development.json";
+            }
+            else
+            {
+                configName = "appsettings.json";
+            }
+            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile(configName).Build();
             if (!options.IsConfigured)
             {
                 options.UseMySQL(configuration.GetConnectionString(nameof(DataContext)));
