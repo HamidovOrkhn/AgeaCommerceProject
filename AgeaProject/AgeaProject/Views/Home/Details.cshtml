@@ -274,10 +274,7 @@
 
             for (var i = 0; i < images.length; i++) {
                 console.log(images[i].childNodes[3])
-                //var paneContainer = $(images[i])
-                //new Drift(document.querySelector(`.${images[i].childNodes[1].className}`));
                 new Drift(document.querySelector(`.${images[i].childNodes[1].className}`), {
-                    //paneContainer: document.querySelector(`.${images[i].childNodes[3].className}`),
                     zoomFactor: 2,
                     inlinePane: true
                 });
@@ -285,11 +282,11 @@
         })()
     </script>
     <script>
-        //const facebookBtn = document.querySelector(".facebook>a");
-        //const twitterBtn = document.querySelector(".twitter>a");
-        //const pinterestBtn = document.querySelector(".pinterest>a");
-        //const linkedinBtn = document.querySelector(".linkedin>a");
-        //const whatsappBtn = document.querySelector(".whatsapp>a");
+        const facebookBtn = document.querySelector(".facebook a");
+        const twitterBtn = document.querySelector(".twitter a");
+        const pinterestBtn = document.querySelector(".pinterest a");
+        const linkedinBtn = document.querySelector(".linkedin a");
+        const whatsappBtn = document.querySelector(".whatsapp a");
 
         function init() {
             const pinterestImg = document.querySelector(".post-img");
