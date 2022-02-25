@@ -6,6 +6,7 @@ using AgeaProject.ViewModels;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,11 @@ namespace AgeaProject.Controllers
     public class HomeController : Controller
     {
         private readonly DataContext _db;
-        public HomeController(DataContext db)
+        private readonly IConfiguration _cfg;
+        public HomeController(DataContext db, IConfiguration cfg)
         {
             _db = db;
+            _cfg = cfg;
         }
         public IActionResult Index()
         {
@@ -91,7 +94,7 @@ namespace AgeaProject.Controllers
                                 $"Description : {request.Desc} <br>";
             try
             {
-                await MailService.SendEmailAsync(new MailRequest { Body = bodyString, Subject = "AgeaFire Order Request", ToEmail = request.Email });
+                await MailService.SendEmailAsync(new MailRequest { Body = bodyString, Subject = "AgeaFire Order Request", ToEmail = _cfg["MailSettings:Mail"] });
                 _db.SaveChanges();
                 TempData["Success-Quote"] = "Your order sended to the Customer. They will pick you order as soon as they can !";
             }
