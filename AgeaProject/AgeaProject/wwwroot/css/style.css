@@ -927,6 +927,9 @@ textarea:focus {
          max-height: 180px;
          overflow-y: auto;
     }
+	.li-static-banner {
+		display: none !important;
+	}
 }
  @media only screen and (max-width: 479px) {
      .mobile-menu .mean-bar .mean-nav > ul {
@@ -941,6 +944,7 @@ textarea:focus {
      width: 100%;
     /*---- Sub Menu & Mega Menu ----*/
 }
+
 .mobile-menu .mean-bar .mean-nav > ul li a {
 	font-size: 13px;
 	display: block;

@@ -5933,7 +5933,14 @@
 
 @media only screen and (max-width: 767px) {
   .pt-xs-30 {
-    padding-top: 30px !important; } }
+    padding-top: 30px !important; }
+    .li-static-banner {
+        display: none !important;
+    }
+    .li-banner-2 {
+        display: none !important;
+    }
+}
 
 @media only screen and (max-width: 767px) {
   .pt-xs-35 {
