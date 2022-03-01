@@ -2599,6 +2599,7 @@ textarea:focus {
 	transform: translate3d(0,0,0);
 }
 .li-banner > a > img, .single-banner > a > img {
+	padding:40px;
 	width: 100%;
 }
 /*----------------------------------------*/
@@ -4997,6 +4998,7 @@ span.required {
   min-height: 30px;
 }
 .product-image > a img {
+  padding:35px;
   width: 100%;
 }
 .shop-products-wrapper .tab-content .tab-pane.active {
