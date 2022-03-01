@@ -2599,8 +2599,10 @@ textarea:focus {
 	transform: translate3d(0,0,0);
 }
 .li-banner > a > img, .single-banner > a > img {
-	padding:40px;
 	width: 100%;
+}
+.padding40 {
+	padding: 40px;
 }
 /*----------------------------------------*/
 /*  2.6 Li's Laptop Features
