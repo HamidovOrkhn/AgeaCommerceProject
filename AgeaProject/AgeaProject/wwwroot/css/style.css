@@ -5006,6 +5006,7 @@ span.required {
 .product-image > a img {
   padding:35px;
   width: 100%;
+  height:300px;
 }
 .shop-products-wrapper .tab-content .tab-pane.active {
     display: block;
