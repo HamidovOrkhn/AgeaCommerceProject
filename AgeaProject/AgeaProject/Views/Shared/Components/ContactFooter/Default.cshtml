@@ -3,7 +3,9 @@
 {
     <div class="col-lg-4 col-md-6">
         <div class="footer-logo">
-            <img width="200" src="~/images/logoageafiresonc.png" alt="Footer Logo">
+            <a asp-action="Index" asp-controller="Home">
+               <img width="200" src="~/images/logoageafiresonc.png" alt="Footer Logo">
+            </a>
             <p class="info">
                 @Model.Text
             </p>

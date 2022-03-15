@@ -2488,6 +2488,8 @@ textarea:focus {
 }
 .product-image {
   position: relative;
+  width:100%;
+  height:270px;
 }
 .section-title-3 > h2 {
   background: #ffffff none repeat scroll 0 0;
@@ -2600,6 +2602,7 @@ textarea:focus {
 }
 .li-banner > a > img, .single-banner > a > img {
 	width: 100%;
+	padding:50px;
 }
 .padding40 {
 	padding: 40px;
@@ -4271,6 +4274,7 @@ thead {
 }
 .li-blog-content p {
 	margin-bottom: 20px;
+	width:90%;
 }
 .li-blog-single-item .li-blog-content .li-blog-details .li-blog-meta a {
 	color: #a4a4a4;
