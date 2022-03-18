@@ -5,12 +5,20 @@
         <h3>Products</h3>
     </div>
 </div>
-<div class="row">
+<form asp-action="Index" asp-controller="Products" asp-area="Admin" method='get'>
+    <div class="row">
     <div class="col-3"><a asp-action="Create" asp-controller="Products" asp-area="Admin" class="btn btn-primary">Add Product</a></div>
+            <div class="col-3">
+            <div class="form-group">
+                <input name="searchKey" placeholder="Search" class="form-control" />
+            </div>
+        </div>
+        <div class="col-3"><button type="submit" class="btn btn-primary">Search</button></div>
 </div>
+</form>
 <div class="row justify-content-center mt-3">
     <div class="col-12">
-        <table class="table table-bordered text-center">
+        <table id="examples" class="table table-bordered text-center">
             <thead style="background-color: #e74a3b;color:white;">
                 <tr class="text-center">
                     <th scope="col">Category</th>
@@ -45,16 +53,16 @@
         <nav aria-label="...">
             <ul class="pagination">
                 <li class="page-item @(Model.Pagination.Page == 0 ? "disabled": "")">
-                    <a class="page-link" asp-route-page=0 tabindex="-1">First Page</a>
+                    <a class="page-link" asp-route-searchKey="@Context.Request.Query["searchKey"]" asp-route-page=0 tabindex="-1">First Page</a>
                 </li>
                 @for (int i = Model.Pagination.StartPage; i <= Model.Pagination.EndPage; i++)
                 {
                     <li class="page-item @(Model.Pagination.Page == i ? "active": "")">
-                        <a class="page-link" asp-action="Index" asp-controller="Products" asp-area="Admin" asp-route-page=@i>@(i + 1)<span class="sr-only">(current)</span></a>
+                        <a class="page-link" asp-route-searchKey="@Context.Request.Query["searchKey"]" asp-action="Index" asp-controller="Products" asp-area="Admin" asp-route-page=@i>@(i + 1)<span class="sr-only">(current)</span></a>
                     </li>
                 }
                 <li class="page-item  @(Model.Pagination.Page == Model.Pagination.PageCount - 1 ? "disabled": "")">
-                    <a class="page-link" asp-action="Index" asp-controller="Products" asp-area="Admin" asp-route-page=@(Model.Pagination.PageCount-1)>Last Page</a>
+                    <a class="page-link" asp-route-searchKey="@Context.Request.Query["searchKey"]" asp-action="Index" asp-controller="Products" asp-area="Admin" asp-route-page=@(Model.Pagination.PageCount-1)>Last Page</a>
                 </li>
             </ul>
         </nav>

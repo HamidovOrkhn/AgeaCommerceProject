@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace AgeaProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Login]
+    [Login]
     public class CategoriesController : Controller
     {
         private readonly DataContext _db;
@@ -21,10 +21,14 @@ namespace AgeaProject.Areas.Admin.Controllers
         {
             _db = db;
         }
-        public IActionResult Index([FromQuery] int page = 0)
+        public IActionResult Index([FromQuery] string searchKey = null, [FromQuery] int page = 0)
         {
             IndexViewModel model = new IndexViewModel();
             List<Category> data = _db.Categories.ToList();
+            if (searchKey is object)
+            {
+                data = data.Where(a=>a.Name.Contains(searchKey)).ToList();
+            }
             float pagecount = data.Count;
             int count = (int)Math.Ceiling(pagecount / 10);
 

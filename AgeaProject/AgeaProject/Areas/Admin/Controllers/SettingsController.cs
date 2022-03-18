@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace AgeaProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
-   // [Login]
+    [Login]
     public class SettingsController : Controller
     {
         private readonly DataContext _db;

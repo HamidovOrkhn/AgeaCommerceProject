@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace AgeaProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
-   // [Login]
+    [Login]
     public class HomeController : Controller
     {
         public IActionResult Index()

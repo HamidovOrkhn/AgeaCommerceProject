@@ -29,6 +29,8 @@ namespace AgeaProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Login([FromForm] AuthIndexViewModel req)
         {
+            var username = Crypto.HashPassword(req.Username);
+            var pass = Crypto.HashPassword(req.Password);
             if (!Crypto.VerifyHashedPassword(_configuration["User:Password"], req.Password) || 
                 !Crypto.VerifyHashedPassword(_configuration["User:Username"], req.Username))
             {

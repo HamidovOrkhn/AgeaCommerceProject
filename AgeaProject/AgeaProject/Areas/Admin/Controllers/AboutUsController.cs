@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace AgeaProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Login]
+    [Login]
     public class AboutUsController : Controller
     {
         private readonly DataContext _db;
@@ -48,21 +48,33 @@ namespace AgeaProject.Areas.Admin.Controllers
         // GET: AboutUsController/Edit/5
         public ActionResult Update(int id)
         {
-            return View();
+            AboutUs data = _db.AboutUs.Find(id);
+            return View(data);
         }
 
         // POST: AboutUsController/Edit/5
         [HttpPost]
-        public ActionResult Update(int id, IFormCollection collection)
+        public ActionResult Update([FromForm] int id, AboutUsUpdateViewModel request)
         {
-            try
+            AboutUs data = _db.AboutUs.Where(m => m.Id == id).FirstOrDefault();
+            if (data is object)
             {
-                return RedirectToAction(nameof(Index));
+                data.Name = request.Name;
+                data.Title =request.Title;
+                data.Text = request.Text;
+
+                string filename = data.Image;
+                if (request.Image is object)
+                {
+                    string[] filenameArr = filename.Split("/");
+                    FileManager.Delete(filenameArr[1], filenameArr[0]);
+                    filename = FileManager.IFormSaveLocal(request.Image, "about us");
+                    data.Image = filename;
+                }
+                TempData["Success-about"] = "About us info updated successfuly";
             }
-            catch
-            {
-                return View();
-            }
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
         public ActionResult Remove(int id)
         {
