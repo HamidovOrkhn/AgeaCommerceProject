@@ -94,7 +94,7 @@ namespace AgeaProject.Controllers
                                 $"Description : {request.Desc} <br>";
             try
             {
-                await MailService.SendEmailAsync(new MailRequest { Body = bodyString, Subject = "AgeaFire Order Request", ToEmail = _cfg["MailSettings:Mail"] });
+                await MailService.SendEmailAsync(new MailRequest { Body = bodyString, Subject = "AgeaFire Order Request", ToEmail = _cfg["MailSettings:ToMail"] });
                 _db.SaveChanges();
                 TempData["Success-Quote"] = "Your order sended to the Customer. They will pick you order as soon as they can !";
             }
