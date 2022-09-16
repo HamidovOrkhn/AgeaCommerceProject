@@ -80,12 +80,23 @@
 @section Scripts{
     @if (TempData["Success-form"] is object)
     {
-        <input type="hidden" id="Success-Category" value="@TempData["Success-Messages"]" />
+        <input type="hidden" id="Success-form" value="@TempData["Success-form"]" />
         <script>
             Swal.fire(
                 'Success !',
-                $('#Success-Messages').val(),
+                $('#Success-form').val(),
                 'success'
+            )
+        </script>
+    }
+    @if (TempData["Wrong-form"] is object)
+    {
+        <input type="hidden" id="Wrong-form" value="@TempData["Wrong-form"]" />
+        <script>
+            Swal.fire(
+                'Error !',
+                $('#Wrong-form').val(),
+                'error'
             )
         </script>
     }

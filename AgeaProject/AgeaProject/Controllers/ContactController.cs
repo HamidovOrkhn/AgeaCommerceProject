@@ -1,7 +1,9 @@
-﻿using AgeaProject.Data;
+﻿using AgeaProject.Areas.Admin.Helpers;
+using AgeaProject.Data;
 using AgeaProject.Models;
 using AgeaProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +14,11 @@ namespace AgeaProject.Controllers
     public class ContactController : Controller
     {
         private readonly DataContext _db;
-        public ContactController(DataContext db)
+        private readonly IConfiguration _cfg;
+        public ContactController(DataContext db, IConfiguration cfg)
         {
             _db = db;
+            _cfg = cfg; 
         }
         public IActionResult Index()
         {
@@ -25,7 +29,7 @@ namespace AgeaProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateBook([FromForm] ContactForm request)
+        public async Task<IActionResult> CreateBook([FromForm] ContactForm request)
         {
             if (ModelState.IsValid)
             {
@@ -35,11 +39,24 @@ namespace AgeaProject.Controllers
                 model.Subject = request.Subject;
                 model.Text = request.Text;
                 _db.ContactForms.Add(model);
-                _db.SaveChanges();
-                TempData["Success-form"] = "Messages Added Successfully";
+                string bodyString = $"Name : {request.Name} <br>" +
+                                    $"Email : {request.Email} <br>" +
+                                    $"Subject : {request.Subject} <br>" +
+                                    $"Text : {request.Text} <br>";
+                try
+                {
+                    await MailService.SendEmailAsync(new MailRequest { Body = bodyString, Subject = "AgeaFire Contact Us Request", ToEmail = _cfg["MailSettings:ToMail"] });
+                    _db.SaveChanges();
+                    TempData["Success-form"] = "Messages Added Successfully";
+                }
+                catch(Exception x)
+                {
+                    TempData["Wrong-form"] = x.Message;
+                    return RedirectToAction("Index");
+                }
                 return RedirectToAction("Index");
             }
-            TempData["wrong-form"] = "Messages Not Added";
+            TempData["Wrong-form"] = "Messages Not Added";
             return RedirectToAction("Index");
          }
     }

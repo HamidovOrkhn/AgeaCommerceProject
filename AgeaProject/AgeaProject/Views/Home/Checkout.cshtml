@@ -12,7 +12,7 @@
         </div>
     </div>
 </div>
-<form asp-action="Checkout" asp-controller="Home" method="post">
+<form asp-action="Checkout" asp-controller="Home" method="post" id="checkout-form">
     <div class="checkout-area pt-60 pb-30">
         <div class="container">
             <div class="row">
@@ -52,12 +52,12 @@
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>Phone  <span class="required">*</span></label>
-                                    <input asp-for="Phone" type="text">
+                                    <input asp-for="Phone" id="phone" type="text">
                                     <span asp-validation-for="Phone" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
-                        <input asp-for="OrderDetails" type="hidden"  id="OrderDetails"/>
+                        <input asp-for="OrderDetails" type="hidden" id="OrderDetails" />
                         <div class="order-notes">
                             <div class="checkout-form-list">
                                 <label>Order Notes</label>
@@ -79,7 +79,6 @@
                                     </tr>
                                 </thead>
                                 <tbody class="payment-body">
-
                                 </tbody>
                                 <tfoot>
                                     <tr class="order-total">
@@ -108,7 +107,7 @@
                                     </div>
                                 </div>
                                 <div class="order-button-payment">
-                                    <input value="Place Quote" type="submit" />
+                                    <input value="Place Quote" type="submit" id="place-quote" />
                                 </div>
                             </div>
                         </div>
@@ -120,45 +119,59 @@
     </div>
 </form>
 @section Scripts{
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
-            LoadShopCardPayment()
-    function LoadShopCardPayment() {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function() {
+            $('#phone').usPhoneFormat({
+                format: '(xxx) xxx-xxxx',
+            });
+        });
+        LoadShopCardPayment()
+        function LoadShopCardPayment() {
             var data = localStorage.getItem("shoping-keys")
-            if (data) {
-            var splited = data.split(",")
+            if (!data) {
+                Swal.fire(
+                    'Failed !',
+                    'Please choose at least 1 product for successful order, otherwise order will not send',
+                    'error'
+                )
+            }
+            else {
+                var splited = data.split(",")
                 var group_of_items = groupBy(splited);
                 var keys = returnKeys(group_of_items);
                 var price = 0;
                 var unitCount = 0;
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("GetShop", "Home")",
-                data: JSON.stringify(keys),
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    console.log(data)
-                    var item = "";
-                    var productInfo = ""
-                    for (var i = 0; i < data.length; i++) {
-                        var existed = group_of_items.find(({ id }) => id === `${data[i].id}`);
-                        console.log(existed + "existed")
-                        console.log(group_of_items)
-                        item += `<tr class="cart_item" id="payment${data[i].id}">
-                                        <td class="cart-product-name">${data[i].name}<strong class="product-quantity"> × ${existed.count}</strong></td>
-                                        <td class="cart-product-total"><span class="amount">$${data[i].price * existed.count}</span></td>
-                                    </tr>`;
-                        price += data[i].price * existed.count
-                        unitCount += 1;
-                        productInfo += `Product name: ${data[i].name}, Quantity: ${existed.count}, Category: ${data[i].category.name} `;
-                    }
-                    var price = parseFloat(localStorage.getItem("shoping-keys-price"))
-                    $(".total-price-payment").text(`$${price}`)
-                    $('#OrderDetails').val(productInfo)
-                    $('.payment-body').append(item)
-                },
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("GetShop", "Home")",
+                    data: JSON.stringify(keys),
+                    contentType: "application/json; charset=utf-8",
+                    success: function(data) {
+                        console.log(data)
+                        var item = "";
+                        var productInfo = ""
+                        for (var i = 0; i < data.length; i++) {
+                            var existed = group_of_items.find(({ id }) => id === `${data[i].id}`);
+                            console.log(existed + "existed")
+                            console.log(group_of_items)
+                            item += `<tr class="cart_item" id="payment${data[i].id}">
+                                                                                        <td class="cart-product-name">${data[i].name}<strong class="product-quantity"> × ${existed.count}</strong></td>
+                                                                                        <td class="cart-product-total"><span class="amount">$${data[i].price * existed.count}</span></td>
+                                                                                    </tr>`;
+                            price += data[i].price * existed.count
+                            unitCount += 1;
+                            productInfo += `Product name: ${data[i].name}, Quantity: ${existed.count}, Category: ${data[i].category.name} `;
+                        }
+                        var price = parseFloat(localStorage.getItem("shoping-keys-price"))
+                        $(".total-price-payment").text(`$${price}`)
+                        $('#OrderDetails').val(productInfo)
+                        $('.payment-body').append(item)
+                    },
 
-            });
+                });
             }
 
 
@@ -197,5 +210,5 @@
             return newArray;
 
         }
-</script>
+    </script>
 }

@@ -85,6 +85,11 @@ namespace AgeaProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Checkout(RequestProduct request)
         {
+            if (request.OrderDetails is null)
+            {
+                TempData["Error-Quote"] = "Please choose at least 1 product for successful order, otherwise order will not send";
+                return RedirectToAction(nameof(Index));
+            }
             Quotes quote = request.Adapt<Quotes>();
             _db.Quotes.Add(quote);
             string bodyString = $"Name : {request.Name} <br>" +
