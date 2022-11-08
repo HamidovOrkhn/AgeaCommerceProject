@@ -87,7 +87,7 @@
                                         <div class="hm-minicart-trigger">
                                             <span class="item-icon"></span>
                                             <span class="item-text shop-price-icon">
-                                                $0
+                                                Shop
                                                 <span class="cart-item-count">0</span>
                                             </span>
                                         </div>
@@ -95,7 +95,7 @@
                                         <div class="minicart">
                                             <ul class="minicart-product-list">
                                             </ul>
-                                            <p class="minicart-total">SUBTOTAL: <span class="shop-price-banner">$0</span></p>
+                                            @*<p class="minicart-total">SUBTOTAL: <span class="shop-price-banner">$0</span></p>*@
                                             <div class="minicart-button">
                                                 <a asp-action="ShoppingCard" asp-controller="Home" class="li-button li-button-dark li-button-fullwidth li-button-sm">
                                                     <span>View Full Cart</span>
@@ -237,7 +237,7 @@
                                     <ul>
                                         <li><a asp-action="Index" asp-controller="Shop">Shop</a></li>
                                         <li><a asp-action="Index" asp-controller="Products">Products</a></li>
-                                        <li><a asp-action="Index" asp-controller="Categories">Categories</a></li>
+                                        <li><a asp-action="Index" asp-controller="Shop">Categories</a></li>
                                         <li><a asp-action="Index" asp-controller="Blog">Blog</a></li>
                                         <li><a asp-action="Index" asp-controller="Contact">Contact us</a></li>
                                     </ul>
@@ -398,7 +398,7 @@
                     }
                     unitCount = splited.length;
                     $('.hm-minicart .minicart-product-list').append(item);
-                    $('.shop-price-icon').html(`$${price}<span class="cart-item-count">${unitCount}</span>`)
+                    $('.shop-price-icon').html(`Shop<span class="cart-item-count">${unitCount}</span>`)
                     $('.shop-price-banner').text(`$${price}`)
                     localStorage.setItem("shoping-keys-price", price)
                     localStorage.setItem("shoping-keys-count", unitCount)
@@ -445,7 +445,7 @@
                         }
                         var newPrice = price + data.price
                         var newUnitCount = unitCount + 1;
-                        $('.shop-price-icon').html(`$${newPrice}<span class="cart-item-count">${newUnitCount}</span>`)
+                        $('.shop-price-icon').html(`Shop<span class="cart-item-count">${newUnitCount}</span>`)
                         $('.shop-price-banner').text(`$${newPrice}`)
                         localStorage.setItem("shoping-keys-price", newPrice)
                         localStorage.setItem("shoping-keys-count", newUnitCount)
@@ -481,7 +481,7 @@
                             }
                             var newPrice = price + data.price
                             var newUnitCount = unitCount + 1;
-                            $('.shop-price-icon').html(`$${newPrice}<span class="cart-item-count">${newUnitCount}</span>`)
+                            $('.shop-price-icon').html(`Shop<span class="cart-item-count">${newUnitCount}</span>`)
                             $('.shop-price-banner').text(`$${newPrice}`)
                             localStorage.setItem("shoping-keys-price", newPrice)
                             localStorage.setItem("shoping-keys-count", newUnitCount)
@@ -512,7 +512,7 @@
                             }
                             var newPrice = price + data.price
                             var newUnitCount = unitCount + 1;
-                            $('.shop-price-icon').html(`$${newPrice}<span class="cart-item-count">${newUnitCount}</span>`)
+                            $('.shop-price-icon').html(`Shop<span class="cart-item-count">${newUnitCount}</span>`)
                             $('.shop-price-banner').text(`$${newPrice}`)
                             localStorage.setItem("shoping-keys-price", newPrice)
                             localStorage.setItem("shoping-keys-count", newUnitCount)
@@ -625,10 +625,10 @@
                 var countLocal = parseInt(localStorage.getItem("shoping-keys-count"));
                 var newPrice = priceLocal - (price * count);
                 var newCount = counter;
-                $('.shop-price-icon').html(`$${newPrice}<span class="cart-item-count">${newCount}</span>`)
-                $('.shop-price-banner').text(`$${newPrice}`)
-                $('.total-price-shop').text(`$${newPrice}`)
-                $('.total-price-payment').text(`$${newPrice}`)
+                //  $('.shop-price-icon').html(`$${newPrice}<span class="cart-item-count">${newCount}</span>`)
+                $('.shop-price-banner').text(`${newCount}`)
+                $('.total-price-shop').text(`${newCount} X`)
+                $('.total-price-payment').text(`${newCount} X`)
                 localStorage.setItem("shoping-keys-price", newPrice);
                 localStorage.setItem("shoping-keys-count", newCount);
                 $("#li" + id).remove();

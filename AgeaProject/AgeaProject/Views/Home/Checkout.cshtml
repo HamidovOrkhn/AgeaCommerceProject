@@ -83,7 +83,7 @@
                                 <tfoot>
                                     <tr class="order-total">
                                         <th>Order Total</th>
-                                        <td><strong><span class="amount-checkout total-price-payment">$0.00</span></strong></td>
+                                        <td><strong><span class="amount-checkout total-price-payment"></span></strong></td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -150,23 +150,24 @@
                     data: JSON.stringify(keys),
                     contentType: "application/json; charset=utf-8",
                     success: function(data) {
-                        console.log(data)
                         var item = "";
                         var productInfo = ""
+                        var totalCount = 0;
                         for (var i = 0; i < data.length; i++) {
                             var existed = group_of_items.find(({ id }) => id === `${data[i].id}`);
                             console.log(existed + "existed")
                             console.log(group_of_items)
                             item += `<tr class="cart_item" id="payment${data[i].id}">
-                                                                                        <td class="cart-product-name">${data[i].name}<strong class="product-quantity"> × ${existed.count}</strong></td>
-                                                                                        <td class="cart-product-total"><span class="amount">$${data[i].price * existed.count}</span></td>
+                                                                                        <td class="cart-product-name">${data[i].name}</td>
+                                                                                        <td class="cart-product-total"><span class="amount"><strong class="product-quantity"> × ${existed.count}</strong></span></td>
                                                                                     </tr>`;
                             price += data[i].price * existed.count
                             unitCount += 1;
                             productInfo += `Product name: ${data[i].name}, Quantity: ${existed.count}, Category: ${data[i].category.name} `;
+                            totalCount += existed.count;
                         }
                         var price = parseFloat(localStorage.getItem("shoping-keys-price"))
-                        $(".total-price-payment").text(`$${price}`)
+                        $(".total-price-payment").text(`${totalCount} X`)
                         $('#OrderDetails').val(productInfo)
                         $('.payment-body').append(item)
                     },

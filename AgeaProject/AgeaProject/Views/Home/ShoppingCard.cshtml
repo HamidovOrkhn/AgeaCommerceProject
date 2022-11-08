@@ -26,9 +26,9 @@
                                 <tr>
                                     <th class="li-product-thumbnail">images</th>
                                     <th class="cart-product-name">Product</th>
-                                    <th class="li-product-price">Unit Price</th>
-                                    <th class="li-product-quantity">Quantity</th>
-                                    <th class="li-product-subtotal">Total</th>
+                                    <th class="li-product-price">Product Number</th>
+                                    <th class="li-product-quantity">Quantity</th>@*
+                                    <th class="li-product-subtotal">Total</th>*@
                                 </tr>
                             </thead>
                             <tbody class="shoppingcard-body">
@@ -38,9 +38,9 @@
                     <div class="row">
                         <div class="col-md-5 ml-auto">
                             <div class="cart-page-total">
-                                <h2>Cart totals</h2>
+                                <h2>Shop totals</h2>
                                 <ul>
-                                    <li>Total <span class="total-price-shop">$0.00</span></li>
+                                    <li>Product Count Total <span class="total-price-shop">$0.00</span></li>
                                 </ul>
                                 <a asp-action="Checkout" asp-controller="Home">Proceed to checkout</a>
                             </div>
@@ -69,24 +69,23 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     var item = "";
+                    var totalCount = 0;
                     for (var i = 0; i < data.length; i++) {
                         var existed = group_of_items.find(({ id }) => id === `${data[i].id}`);
-                        console.log(existed + "existed")
-                        console.log(group_of_items)
                         item += `<tr id="tr${data[i].id}">
                                     <td class="li-product-thumbnail"><a href="#"><img style="width:250px;height250px;" src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/${data[i].subCategoryCredentials ? data[i].subCategoryCredentials[0].src : ""}" alt="Li's Product Image"></a></td>
                                     <td class="li-product-name"><a href="#">${data[i].name}</a></td>
-                                    <td class="li-product-price"><span class="amount">$${data[i].price}</span></td>
+                                     <td class="li-product-name"><a href="#">${data[i].sku ? data[i].sku : 'Not mentioned'}</a></td>
                                     <td class="quantity">
                                        <h5>X ${existed.count}</h5>
                                     </td>
-                                    <td class="product-subtotal"><span class="amount">$${data[i].price * existed.count}</span></td>
                                 </tr>`;
                         price += data[i].price * existed.count
                         unitCount += 1;
+                        totalCount += existed.count;
                     }
                     var price = parseFloat(localStorage.getItem("shoping-keys-price"))
-                    $(".total-price-shop").text(`$${price}`)
+                    $(".total-price-shop").text(`${totalCount} X`)
                     $('.shoppingcard-body').append(item)
                 },
 

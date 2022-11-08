@@ -111,9 +111,9 @@
                                                                 </h5>
                                                             </div>
                                                             <h4><a class="product_name" asp-action="Details" asp-controller="Home" asp-route-id="@item.Id">@item.Name</a></h4>
-                                                            <div class="price-box">
+                                                            @*<div class="price-box">
                                                                 <span class="new-price">$ @item.Price</span>
-                                                            </div>
+                                                            </div>*@
                                                         </div>
                                                         <div class="add-actions">
                                                             <ul class="add-actions-link">
@@ -164,9 +164,9 @@
                                                                 </h5>
                                                             </div>
                                                             <h4><a class="product_name" asp-action="Details" asp-controller="Home" asp-route-id="@item.Id">@item.Name</a></h4>
-                                                            <div class="price-box">
+                                                            @*<div class="price-box">
                                                                 <span class="new-price">$ @item.Price</span>
-                                                            </div>
+                                                            </div>*@
                                                             <p>@Html.Raw(item.Desc)</p>
                                                         </div>
                                                     </div>

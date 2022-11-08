@@ -25,7 +25,7 @@
                                     <th class="li-product-remove">remove</th>
                                     <th class="li-product-thumbnail">images</th>
                                     <th class="cart-product-name">Product</th>
-                                    <th class="li-product-price">Unit Price</th>
+                                  @*  <th class="li-product-price">Unit Price</th>*@
                                     <th class="li-product-add-cart">add to cart</th>
                                 </tr>
                             </thead>
@@ -62,7 +62,6 @@
                                     <td class="li-product-remove"><a href="#" class='shop-item-close-wishlist' data-id='${data[i].id}'><i class="fa fa-times"></i></a></td>
                                     <td class="li-product-thumbnail"><a href="#"><img width='100' height='100' src="@(Context.Request.Scheme + "://" + Context.Request.Host.Value)/uploads/${data[i].subCategoryCredentials ? data[i].subCategoryCredentials[0].src : ""}" alt=""></a></td>
                                     <td class="li-product-name"><a href="#">${data[i].name}</a></td>
-                                    <td class="li-product-price"><span class="amount">$${data[i].price}</span></td>
                                     <td class="li-product-add-cart add-cart"><a href="#" data-id='${data[i].id}'>add to cart</a></td>
                                 </tr>`;
                     }
